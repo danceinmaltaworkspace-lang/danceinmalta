@@ -54,10 +54,19 @@ const Calendar = () => {
 
   const getEventsForDate = (date) => {
     if (!date) return []
-    const dateStr = date.toISOString().split('T')[0]
+    // Use local date to avoid timezone issues
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    const dateStr = `${year}-${month}-${day}`
+    
     return events.filter(event => {
       const eventDate = event.date?.toDate ? event.date.toDate() : new Date(event.date)
-      return eventDate.toISOString().split('T')[0] === dateStr
+      const eventYear = eventDate.getFullYear()
+      const eventMonth = String(eventDate.getMonth() + 1).padStart(2, '0')
+      const eventDay = String(eventDate.getDate()).padStart(2, '0')
+      const eventDateStr = `${eventYear}-${eventMonth}-${eventDay}`
+      return eventDateStr === dateStr
     })
   }
 
@@ -144,8 +153,12 @@ const Calendar = () => {
                 if (!day) return
                 const dayEvents = getEventsForDate(day)
                 if (dayEvents.length > 0) {
-                  const dateStr = day.toISOString().split('T')[0]
-                  navigate(`/calendar/date/${dateStr}`)
+                  // Use local date to avoid timezone issues
+                  const year = day.getFullYear()
+                  const month = String(day.getMonth() + 1).padStart(2, '0')
+                  const dayNum = String(day.getDate()).padStart(2, '0')
+                  const dateStr = `${year}-${month}-${dayNum}`
+                  navigate(`/events/date/${dateStr}`)
                 } else {
                   setSelectedDate(day)
                 }

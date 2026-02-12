@@ -13,6 +13,9 @@ const UpcomingEvents = () => {
   const { language } = useLanguage()
   const t = translations[language]
   const [events, setEvents] = useState([])
+  const [currentEventIndex, setCurrentEventIndex] = useState(0)
+  const [touchStart, setTouchStart] = useState(0)
+  const [touchEnd, setTouchEnd] = useState(0)
 
   useEffect(() => {
     const q = query(collection(db, 'events'), orderBy('date', 'asc'))
@@ -34,6 +37,30 @@ const UpcomingEvents = () => {
     return () => unsubscribe()
   }, [])
 
+  const handleTouchStart = (e) => {
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > 50
+    const isRightSwipe = distance < -50
+
+    if (isLeftSwipe && currentEventIndex < events.length - 1) {
+      setCurrentEventIndex(prev => prev + 1)
+    }
+    if (isRightSwipe && currentEventIndex > 0) {
+      setCurrentEventIndex(prev => prev - 1)
+    }
+    setTouchStart(0)
+    setTouchEnd(0)
+  }
+
   const handleEventClick = (event) => {
     if (event.externalLink) {
       window.open(event.externalLink, '_blank', 'noopener,noreferrer')
@@ -50,45 +77,63 @@ const UpcomingEvents = () => {
         {events.length === 0 ? (
           <p className="upcoming-events-empty">{t.noUpcomingEvents}</p>
         ) : (
-          <div className="events-grid">
-            {events.map((event, index) => (
-              <div
-                key={event.id}
-                className="event-card"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="event-image">
-                  {event.imageId ? (
-                    <CloudinaryImage
-                      imageId={event.imageId}
-                      alt={event.title}
-                      width={400}
-                      height={225}
-                      crop="fill"
-                    />
-                  ) : (
-                    <div className="image-placeholder">
-                      <span>{event.title || 'Event'}</span>
-                    </div>
-                  )}
+          <>
+            <div 
+              className="events-grid"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
+              {events.map((event, index) => (
+                <div
+                  key={event.id}
+                  className={`event-card ${index === currentEventIndex ? 'mobile-active' : ''}`}
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="event-image">
+                    {event.imageId ? (
+                      <CloudinaryImage
+                        imageId={event.imageId}
+                        alt={event.title}
+                        width={400}
+                        height={225}
+                        crop="fill"
+                      />
+                    ) : (
+                      <div className="image-placeholder">
+                        <span>{event.title || 'Event'}</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="event-content">
+                    <h3>{event.title}</h3>
+                    {event.externalLink ? (
+                      <button
+                        type="button"
+                        className="event-btn"
+                        onClick={() => handleEventClick(event)}
+                      >
+                        {t.buyTickets}
+                      </button>
+                    ) : (
+                      <Link to="/events" className="event-btn">{t.learnMore}</Link>
+                    )}
+                  </div>
                 </div>
-                <div className="event-content">
-                  <h3>{event.title}</h3>
-                  {event.externalLink ? (
-                    <button
-                      type="button"
-                      className="event-btn"
-                      onClick={() => handleEventClick(event)}
-                    >
-                      {t.buyTickets}
-                    </button>
-                  ) : (
-                    <Link to="/calendar" className="event-btn">{t.learnMore}</Link>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+            <div className="events-mobile-dots">
+              {events.map((_, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  className={`events-mobile-dot ${index === currentEventIndex ? 'active' : ''}`}
+                  onClick={() => setCurrentEventIndex(index)}
+                  aria-label={`Go to event ${index + 1}`}
+                />
+              ))}
+            </div>
+          </>
         )}
         <div className="section-footer">
           <Link to="/events" className="see-all-btn">{t.seeAll}</Link>

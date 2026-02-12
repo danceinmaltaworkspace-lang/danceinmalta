@@ -25,13 +25,13 @@ const Footer = () => {
             <div className="footer-contact">
               <p>
                 <strong>{language === 'IT' ? 'Indirizzo' : language === 'ES' ? 'Dirección' : language === 'FR' ? 'Adresse' : 'Address'}:</strong><br />
-                37, triq il-Qantar<br />
-                Swieqi SWQ 2228<br />
-                MT 31074108
+                St Georges Business Complex<br />
+                4th Floor, Elija Zammit Street<br />
+                St Julian's STJ 3150, Malta
               </p>
               <p>
                 <strong>{language === 'IT' ? 'Telefono' : language === 'ES' ? 'Teléfono' : language === 'FR' ? 'Téléphone' : 'Phone'}:</strong><br />
-                <a href="tel:+393755340508">+39 375 534 0508</a>
+                <a href="tel:+35699027173">+356 9902 7173</a>
               </p>
               <p>
                 <strong>Email:</strong><br />
@@ -39,7 +39,7 @@ const Footer = () => {
               </p>
               <p>
                 <strong>WhatsApp:</strong><br />
-                <a href="https://wa.me/393755340508" className="whatsapp-link" target="_blank" rel="noopener noreferrer">{t.whatsappCta}</a>
+                <a href="https://wa.me/35699027173" className="whatsapp-link" target="_blank" rel="noopener noreferrer">{t.whatsappCta}</a>
               </p>
             </div>
           </div>
@@ -48,7 +48,6 @@ const Footer = () => {
             <h4 className="footer-subtitle">{t.quickLinks}</h4>
             <ul className="footer-links">
               <li><Link to="/events">{t.events}</Link></li>
-              <li><Link to="/experiences">{t.experiences}</Link></li>
               <li><Link to="/stay">{t.stay}</Link></li>
             </ul>
           </div>

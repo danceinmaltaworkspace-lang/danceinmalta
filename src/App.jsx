@@ -5,10 +5,8 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import Home from './pages/Home'
 import Events from './pages/Events'
-import Experiences from './pages/Experiences'
 import Stay from './pages/Stay'
 import Contacts from './pages/Contacts'
-import CalendarPage from './pages/CalendarPage'
 import DateEventsPage from './pages/DateEventsPage'
 import AdminLogin from './pages/AdminLogin'
 import Admin from './pages/Admin'
@@ -35,11 +33,9 @@ function App() {
             <Route path="/admin" element={<Admin />} />
             <Route path="/" element={<Layout><Home /></Layout>} />
             <Route path="/events" element={<Layout><Events /></Layout>} />
-            <Route path="/experiences" element={<Layout><Experiences /></Layout>} />
+            <Route path="/events/date/:dateStr" element={<Layout><DateEventsPage /></Layout>} />
             <Route path="/stay" element={<Layout><Stay /></Layout>} />
             <Route path="/contacts" element={<Layout><Contacts /></Layout>} />
-            <Route path="/calendar" element={<Layout><CalendarPage /></Layout>} />
-            <Route path="/calendar/date/:dateStr" element={<Layout><DateEventsPage /></Layout>} />
             <Route path="/privacy-policy" element={<Layout><Privacy /></Layout>} />
             <Route path="/cookie-policy" element={<Layout><Cookies /></Layout>} />
           </Routes>

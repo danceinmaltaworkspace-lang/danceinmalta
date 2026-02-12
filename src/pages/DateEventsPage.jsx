@@ -30,7 +30,11 @@ const DateEventsPage = () => {
 
   const dateEvents = events.filter(event => {
     const eventDate = event.date?.toDate ? event.date.toDate() : new Date(event.date)
-    const eventDateStr = eventDate.toISOString().split('T')[0]
+    // Use local date to avoid timezone issues
+    const year = eventDate.getFullYear()
+    const month = String(eventDate.getMonth() + 1).padStart(2, '0')
+    const day = String(eventDate.getDate()).padStart(2, '0')
+    const eventDateStr = `${year}-${month}-${day}`
     return eventDateStr === dateStr
   })
 
@@ -58,7 +62,7 @@ const DateEventsPage = () => {
       <div className="page-container page-animate date-events-page">
         <div className="page-header date-events-header">
           <div className="container">
-            <Link to="/calendar" className="date-events-back">← {t.calendar}</Link>
+            <Link to="/events" className="date-events-back">← {t.events}</Link>
             <h1>{t.calendarTitle}</h1>
           </div>
         </div>
@@ -89,7 +93,7 @@ const DateEventsPage = () => {
         {dateEvents.length === 0 ? (
           <div className="date-events-empty">
             <p>{t.noEvents}</p>
-            <Link to="/calendar" className="date-events-btn-back">{t.calendar}</Link>
+            <Link to="/events" className="date-events-btn-back">{t.events}</Link>
           </div>
         ) : (
           <div className="date-events-grid">

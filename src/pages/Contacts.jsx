@@ -66,18 +66,18 @@ const Contacts = () => {
             <aside className="contacts-sidebar">
               <h2 className="contacts-sidebar-title">{t.contactInfoTitle}</h2>
               <div className="contacts-cards">
-                <a href="https://www.google.com/maps/search/37+triq+il-Qantar+Swieqi+Malta" target="_blank" rel="noopener noreferrer" className="contact-card contact-card-address">
+                <a href="https://www.google.com/maps/search/St+Georges+Business+Complex+Elija+Zammit+Street+St+Julian's+Malta" target="_blank" rel="noopener noreferrer" className="contact-card contact-card-address">
                   <span className="contact-card-icon" aria-hidden>📍</span>
                   <div className="contact-card-content">
                     <span className="contact-card-label">{t.addressLabel}</span>
-                    <span className="contact-card-value">37, triq il-Qantar<br />Swieqi SWQ 2228<br />Malta</span>
+                    <span className="contact-card-value">St Georges Business Complex<br />4th Floor, Elija Zammit Street<br />St Julian's STJ 3150, Malta</span>
                   </div>
                 </a>
-                <a href="tel:+393755340508" className="contact-card">
+                <a href="tel:+35699027173" className="contact-card">
                   <span className="contact-card-icon" aria-hidden>📞</span>
                   <div className="contact-card-content">
                     <span className="contact-card-label">{language === 'IT' ? 'Telefono' : language === 'ES' ? 'Teléfono' : language === 'FR' ? 'Téléphone' : 'Phone'}</span>
-                    <span className="contact-card-value">+39 375 534 0508</span>
+                    <span className="contact-card-value">+356 9902 7173</span>
                   </div>
                 </a>
                 <a href="mailto:info@danceinmalta.com" className="contact-card">
@@ -87,7 +87,7 @@ const Contacts = () => {
                     <span className="contact-card-value">info@danceinmalta.com</span>
                   </div>
                 </a>
-                <a href="https://wa.me/393755340508" className="contact-card contact-card-whatsapp" target="_blank" rel="noopener noreferrer">
+                <a href="https://wa.me/35699027173" className="contact-card contact-card-whatsapp" target="_blank" rel="noopener noreferrer">
                   <span className="contact-card-icon" aria-hidden>💬</span>
                   <div className="contact-card-content">
                     <span className="contact-card-label">WhatsApp</span>

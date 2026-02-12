@@ -21,18 +21,6 @@ const Testimonials = () => {
       text: 'We chose a complete package with accommodation and events included, and we were super excited. Everything was organized down to the smallest details, and we had a unique experience without any stress.',
       rating: 5,
     },
-    {
-      id: 4,
-      title: 'Excellent customer service',
-      text: 'I needed information about an event I had been invited to, and the customer service was impeccable! Quick responses, helpful staff, and the issue was resolved effortlessly. Top-notch service!',
-      rating: 5,
-    },
-    {
-      id: 5,
-      title: 'Perfect for disorganized tourists',
-      text: 'During my vacation in Malta, I discovered this site and it saved me. I easily found an event that wasn\'t listed on other sites, and it was amazing!',
-      rating: 5,
-    },
   ]
 
   const renderStars = (rating) => {

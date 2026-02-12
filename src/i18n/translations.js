@@ -1,8 +1,8 @@
 export const translations = {
   IT: {
     // Navigation
+    home: 'Home',
     events: 'Eventi',
-    experiences: 'Esperienze',
     stay: 'Alloggi',
     contacts: 'Contatti',
     calendar: 'Calendario',
@@ -24,9 +24,6 @@ export const translations = {
     buyTickets: 'Acquista Biglietti',
     learnMore: 'Scopri di più',
     
-    // Experiences
-    experiencesTitle: 'Esperienze',
-    experiencesSubtitle: 'Un\'ampia selezione di esperienze ricorrenti a Malta come escursioni, gite in barca, tour in quad, visite e molto altro per rendere la tua vacanza unica.',
     bookNow: 'Prenota ora',
     
     // Stay
@@ -104,8 +101,8 @@ export const translations = {
   },
   EN: {
     // Navigation
+    home: 'Home',
     events: 'Events',
-    experiences: 'Experiences',
     stay: 'Stay',
     contacts: 'Contacts',
     calendar: 'Calendar',
@@ -127,9 +124,6 @@ export const translations = {
     buyTickets: 'Buy Tickets',
     learnMore: 'Learn More',
     
-    // Experiences
-    experiencesTitle: 'Experiences',
-    experiencesSubtitle: 'A wide selection of recurring experiences in Malta such as excursions, boat trips, quad tours, visits, and much more to make your vacation unique.',
     bookNow: 'Book Now',
     
     // Stay
@@ -207,8 +201,8 @@ export const translations = {
   },
   ES: {
     // Navigation
+    home: 'Inicio',
     events: 'Eventos',
-    experiences: 'Experiencias',
     stay: 'Alojamiento',
     contacts: 'Contactos',
     calendar: 'Calendario',
@@ -230,9 +224,6 @@ export const translations = {
     buyTickets: 'Comprar Entradas',
     learnMore: 'Saber más',
     
-    // Experiences
-    experiencesTitle: 'Experiencias',
-    experiencesSubtitle: 'Una amplia selección de experiencias recurrentes en Malta como excursiones, viajes en barco, tours en quad, visitas y mucho más para hacer tus vacaciones únicas.',
     bookNow: 'Reservar ahora',
     
     // Stay
@@ -310,8 +301,8 @@ export const translations = {
   },
   FR: {
     // Navigation
+    home: 'Accueil',
     events: 'Événements',
-    experiences: 'Expériences',
     stay: 'Hébergement',
     contacts: 'Contacts',
     calendar: 'Calendrier',
@@ -333,9 +324,6 @@ export const translations = {
     buyTickets: 'Acheter des Billets',
     learnMore: 'En savoir plus',
     
-    // Experiences
-    experiencesTitle: 'Expériences',
-    experiencesSubtitle: 'Une large sélection d\'expériences récurrentes à Malte telles que des excursions, des sorties en bateau, des tours en quad, des visites et bien plus encore pour rendre vos vacances uniques.',
     bookNow: 'Réserver maintenant',
     
     // Stay

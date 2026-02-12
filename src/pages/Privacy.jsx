@@ -18,7 +18,7 @@ const Privacy = () => {
         <section className="legal-section">
           <h2>{language === 'IT' ? '1. Titolare del trattamento' : language === 'ES' ? '1. Responsable del tratamiento' : language === 'FR' ? '1. Responsable du traitement' : '1. Data controller'}</h2>
           <p>
-            Dance in Malta – 37, triq il-Qantar, Swieqi SWQ 2228, Malta (MT 31074108).<br />
+            Dance in Malta – St Georges Business Complex, 4th Floor, Elija Zammit Street, St Julian's STJ 3150, Malta.<br />
             Email: info@danceinmalta.com
           </p>
         </section>

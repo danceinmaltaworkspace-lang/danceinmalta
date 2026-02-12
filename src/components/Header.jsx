@@ -22,8 +22,8 @@ const Header = () => {
 
   const languages = ['IT', 'EN', 'ES', 'FR']
   const menuItems = [
+    { key: 'home', path: '/' },
     { key: 'events', path: '/events' },
-    { key: 'experiences', path: '/experiences' },
     { key: 'stay', path: '/stay' }
   ]
 
@@ -47,13 +47,10 @@ const Header = () => {
               )
             })}
             <li>
-              <Link to="/calendar" className={location.pathname === '/calendar' ? 'active' : ''}>{t.calendar}</Link>
-            </li>
-            <li>
               <Link to="/contacts" className={location.pathname === '/contacts' ? 'active' : ''}>{t.contacts}</Link>
             </li>
             <li>
-              <a href="https://wa.me/393755340508" className="whatsapp-link" target="_blank" rel="noopener noreferrer">
+              <a href="https://wa.me/35699027173" className="whatsapp-link" target="_blank" rel="noopener noreferrer">
                 WhatsApp
               </a>
             </li>

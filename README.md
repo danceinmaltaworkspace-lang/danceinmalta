@@ -40,14 +40,12 @@ danceinmalta/
 │   │   ├── UpcomingEvents.jsx
 │   │   ├── WhatIsDIM.jsx
 │   │   ├── Testimonials.jsx
-│   │   ├── Experiences.jsx
 │   │   ├── WhyUs.jsx
 │   │   ├── Footer.jsx
 │   │   └── CloudinaryImage.jsx
 │   ├── pages/
 │   │   ├── Home.jsx
 │   │   ├── Events.jsx
-│   │   ├── Experiences.jsx
 │   │   ├── Plans.jsx
 │   │   ├── Stay.jsx
 │   │   └── Contacts.jsx
@@ -67,7 +65,6 @@ danceinmalta/
 
 - **Home** (`/`) - Pagina principale con hero, eventi, testimonial e sezione "Why Us"
 - **Events** (`/events`) - Lista completa degli eventi
-- **Experiences** (`/experiences`) - Tour ed esperienze disponibili
 - **Plans** (`/plans`) - Pacchetti e piani disponibili
 - **Stay** (`/stay`) - Opzioni di alloggio
 - **Contacts** (`/contacts`) - Informazioni di contatto e form
