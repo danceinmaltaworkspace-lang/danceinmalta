@@ -136,6 +136,7 @@ const Calendar = () => {
         </div>
       </div>
 
+      <div className="calendar-scroll-area">
       <div className="calendar-wrapper">
         <div className="calendar-grid">
           <div className="calendar-weekdays">
@@ -273,6 +274,7 @@ const Calendar = () => {
             </div>
           </div>
         )}
+      </div>
       </div>
     </div>
   )

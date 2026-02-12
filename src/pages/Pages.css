@@ -6,6 +6,8 @@
 .page-container {
   padding-top: 100px;
   min-height: 100vh;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 .page-container.page-animate .page-header h1 {
@@ -17,6 +19,8 @@
   padding: 4rem 2rem 2rem;
   background: var(--hero-bg);
   color: var(--white);
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .page-header h1 {
@@ -327,6 +331,10 @@
 }
 
 @media (max-width: 768px) {
+  .page-header {
+    padding: 3rem 1rem 1.5rem;
+  }
+
   .page-header h1 {
     font-size: 2rem;
   }

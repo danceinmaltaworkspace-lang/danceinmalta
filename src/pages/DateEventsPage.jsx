@@ -77,7 +77,7 @@ const DateEventsPage = () => {
     <div className="page-container page-animate date-events-page">
       <div className="page-header date-events-header">
         <div className="container">
-          <Link to="/calendar" className="date-events-back">← {t.calendar}</Link>
+          <Link to="/events" className="date-events-back">← {t.events}</Link>
           <h1>{displayDate}</h1>
           <p className="date-events-subtitle">
             {dateEvents.length === 0

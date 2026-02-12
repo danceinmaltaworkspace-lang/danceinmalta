@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { LanguageProvider } from './context/LanguageContext'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import ScrollToTop from './components/ScrollToTop'
+import BackToTop from './components/BackToTop'
+import WhatsAppFloating from './components/WhatsAppFloating'
 import Home from './pages/Home'
 import Events from './pages/Events'
 import Stay from './pages/Stay'
@@ -27,6 +30,7 @@ function App() {
   return (
     <LanguageProvider>
       <Router>
+        <ScrollToTop />
         <div className="App">
           <Routes>
             <Route path="/admin/login" element={<AdminLogin />} />
@@ -40,6 +44,8 @@ function App() {
             <Route path="/cookie-policy" element={<Layout><Cookies /></Layout>} />
           </Routes>
           <CookieConsent />
+          <BackToTop />
+          <WhatsAppFloating />
         </div>
       </Router>
     </LanguageProvider>
