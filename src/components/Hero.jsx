@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
 import { translations } from '../i18n/translations'
 import CloudinaryImage from './CloudinaryImage'
@@ -148,9 +149,9 @@ const Hero = () => {
         <h1 className="hero-title fade-in">
           {t.heroTitle}
         </h1>
-        <p className="hero-subtitle fade-in">
+        <Link to="/events" className="hero-subtitle hero-subtitle-link fade-in">
           {t.heroSubtitle}
-        </p>
+        </Link>
         <div 
           className="hero-slider" 
           ref={sliderRef}
