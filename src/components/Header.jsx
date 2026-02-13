@@ -9,6 +9,7 @@ const Header = () => {
   const { language, setLanguage } = useLanguage()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false)
   const location = useLocation()
   const t = translations[language]
 
@@ -19,6 +20,14 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  useEffect(() => {
+    const closeDropdown = () => setIsLangDropdownOpen(false)
+    if (isLangDropdownOpen) {
+      document.addEventListener('click', closeDropdown)
+      return () => document.removeEventListener('click', closeDropdown)
+    }
+  }, [isLangDropdownOpen])
 
   const languages = ['IT', 'EN', 'ES', 'FR']
   const menuItems = [
@@ -58,7 +67,7 @@ const Header = () => {
         </nav>
 
         <div className="header-actions">
-          <div className="language-selector">
+          <div className="language-selector language-selector-desktop">
             {languages.map((lang) => (
               <button
                 key={lang}
@@ -68,6 +77,39 @@ const Header = () => {
                 {lang}
               </button>
             ))}
+          </div>
+          <div className={`language-selector language-selector-mobile ${isLangDropdownOpen ? 'open' : ''}`}>
+            <button
+              type="button"
+              className="lang-btn lang-btn-trigger"
+              onClick={(e) => {
+                e.stopPropagation()
+                setIsLangDropdownOpen(!isLangDropdownOpen)
+              }}
+              aria-expanded={isLangDropdownOpen}
+              aria-haspopup="listbox"
+              aria-label="Seleziona lingua"
+            >
+              {language}
+              <span className="lang-dropdown-arrow">▼</span>
+            </button>
+            {isLangDropdownOpen && (
+              <div className="lang-dropdown">
+                {languages.map((lang) => (
+                  <button
+                    key={lang}
+                    type="button"
+                    className={`lang-dropdown-item ${language === lang ? 'active' : ''}`}
+                    onClick={() => {
+                      setLanguage(lang)
+                      setIsLangDropdownOpen(false)
+                    }}
+                  >
+                    {lang}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
           <button
             className="mobile-menu-toggle"
