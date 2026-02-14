@@ -110,11 +110,39 @@
   display: inline-block;
   text-decoration: none;
   transition: var(--transition);
+  cursor: pointer;
+  animation: fadeIn 0.8s ease-out 0.4s both, heroSubtitlePulse 2.5s ease-in-out 1.2s infinite;
 }
 
 .hero-subtitle-link:hover {
   color: var(--white);
   text-decoration: underline;
+  animation: none;
+}
+
+.hero-subtitle-link:hover .hero-subtitle-arrow {
+  animation: heroSubtitleArrowHover 0.5s ease;
+  transform: translateX(6px);
+}
+
+.hero-subtitle-arrow {
+  display: inline-block;
+  margin-left: 0.25rem;
+  animation: heroSubtitleArrow 1.5s ease-in-out infinite;
+}
+
+@keyframes heroSubtitlePulse {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 1; }
+}
+
+@keyframes heroSubtitleArrow {
+  0%, 100% { transform: translateX(0); opacity: 0.85; }
+  50% { transform: translateX(4px); opacity: 1; }
+}
+
+@keyframes heroSubtitleArrowHover {
+  to { transform: translateX(6px); }
 }
 
 .hero-slider {

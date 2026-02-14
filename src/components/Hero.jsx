@@ -151,6 +151,7 @@ const Hero = () => {
         </h1>
         <Link to="/events" className="hero-subtitle hero-subtitle-link fade-in">
           {t.heroSubtitle}
+          <span className="hero-subtitle-arrow" aria-hidden> →</span>
         </Link>
         <div 
           className="hero-slider" 
