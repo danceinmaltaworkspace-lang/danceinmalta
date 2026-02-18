@@ -32,9 +32,9 @@
 }
 
 .logo-img {
-  height: 81px;
+  height: 110px;
   width: auto;
-  max-width: 300px;
+  max-width: 360px;
   object-fit: contain;
   display: block;
 }
