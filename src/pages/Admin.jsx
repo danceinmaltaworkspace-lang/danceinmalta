@@ -22,7 +22,7 @@ const Admin = () => {
   const [showEventForm, setShowEventForm] = useState(false)
   const [editingEvent, setEditingEvent] = useState(null)
   const [eventForm, setEventForm] = useState({
-    title: '', date: '', location: '', description: '', imageId: '', externalLink: ''
+    title: '', date: '', location: '', description: '', imageId: '', externalLink: '', venueId: ''
   })
 
   // Rooms (Stay)
@@ -32,6 +32,12 @@ const Admin = () => {
   const [roomForm, setRoomForm] = useState({
     name: '', location: '', rating: '4', price: '', features: '', imageId: '', externalLink: ''
   })
+
+  // Venues (Locali)
+  const [venues, setVenues] = useState([])
+  const [showVenueForm, setShowVenueForm] = useState(false)
+  const [editingVenue, setEditingVenue] = useState(null)
+  const [venueForm, setVenueForm] = useState({ name: '', address: '' })
 
   // Messages (contact form)
   const [messages, setMessages] = useState([])
@@ -65,6 +71,15 @@ const Admin = () => {
       (snap) => setRooms(snap.docs.map(d => ({ id: d.id, ...d.data() })))
     )
     return () => unsubRooms()
+  }, [user])
+
+  useEffect(() => {
+    if (!user) return
+    const unsubVenues = onSnapshot(
+      query(collection(db, 'venues'), orderBy('name', 'asc')),
+      (snap) => setVenues(snap.docs.map(d => ({ id: d.id, ...d.data() })))
+    )
+    return () => unsubVenues()
   }, [user])
 
   useEffect(() => {
@@ -122,7 +137,7 @@ const Admin = () => {
       } else {
         await addDoc(collection(db, 'events'), { ...payload, createdAt: new Date() })
       }
-      setEventForm({ title: '', date: '', location: '', description: '', imageId: '', externalLink: '' })
+      setEventForm({ title: '', date: '', location: '', description: '', imageId: '', externalLink: '', venueId: '' })
       setEditingEvent(null)
       setShowEventForm(false)
     } catch (err) {
@@ -140,7 +155,8 @@ const Admin = () => {
       location: event.location || '',
       description: event.description || '',
       imageId: event.imageId || '',
-      externalLink: event.externalLink || ''
+      externalLink: event.externalLink || '',
+      venueId: event.venueId || ''
     })
     setShowEventForm(true)
   }
@@ -207,6 +223,39 @@ const Admin = () => {
     }
   }
 
+  // —— Venues ——
+  const handleVenueSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const payload = { name: venueForm.name.trim(), address: venueForm.address.trim() }
+      if (editingVenue) {
+        await updateDoc(doc(db, 'venues', editingVenue.id), payload)
+      } else {
+        await addDoc(collection(db, 'venues'), { ...payload, createdAt: new Date() })
+      }
+      setVenueForm({ name: '', address: '' })
+      setEditingVenue(null)
+      setShowVenueForm(false)
+    } catch (err) {
+      alert('Error: ' + err.message)
+    }
+  }
+
+  const handleEditVenue = (venue) => {
+    setEditingVenue(venue)
+    setVenueForm({ name: venue.name || '', address: venue.address || '' })
+    setShowVenueForm(true)
+  }
+
+  const handleDeleteVenue = async (id) => {
+    if (!window.confirm(t.confirmDeleteVenue || 'Eliminare questo locale?')) return
+    try {
+      await deleteDoc(doc(db, 'venues', id))
+    } catch (err) {
+      alert('Error: ' + err.message)
+    }
+  }
+
   if (loading) {
     return <div className="admin-loading">Loading...</div>
   }
@@ -232,6 +281,12 @@ const Admin = () => {
           {t.adminTabRooms}
         </button>
         <button
+          className={`admin-tab ${activeTab === 'venues' ? 'active' : ''}`}
+          onClick={() => setActiveTab('venues')}
+        >
+          {t.adminTabVenues || 'Locali'}
+        </button>
+        <button
           className={`admin-tab ${activeTab === 'messages' ? 'active' : ''}`}
           onClick={() => setActiveTab('messages')}
         >
@@ -248,7 +303,7 @@ const Admin = () => {
                 onClick={() => {
                   setShowEventForm(!showEventForm)
                   setEditingEvent(null)
-                  setEventForm({ title: '', date: '', location: '', description: '', imageId: '', externalLink: '' })
+                  setEventForm({ title: '', date: '', location: '', description: '', imageId: '', externalLink: '', venueId: '' })
                 }}
                 className="add-event-btn"
               >
@@ -277,6 +332,15 @@ const Admin = () => {
                   <div className="form-group">
                     <label>{t.eventDescription}</label>
                     <textarea value={eventForm.description} onChange={e => setEventForm({ ...eventForm, description: e.target.value })} rows="4" />
+                  </div>
+                  <div className="form-group">
+                    <label>{t.eventVenue || 'Locale (opzionale)'}</label>
+                    <select value={eventForm.venueId} onChange={e => setEventForm({ ...eventForm, venueId: e.target.value })}>
+                      <option value="">{t.noVenue || '— Nessun locale —'}</option>
+                      {venues.map(v => (
+                        <option key={v.id} value={v.id}>{v.name}</option>
+                      ))}
+                    </select>
                   </div>
                   <div className="form-group">
                     <label>{t.eventImage}</label>
@@ -414,6 +478,82 @@ const Admin = () => {
                   </div>
                 ))}
               </div>
+            </div>
+          </>
+        )}
+
+        {/* —— LOCALI —— */}
+        {activeTab === 'venues' && (
+          <>
+            <div className="admin-actions">
+              <button
+                onClick={() => {
+                  setShowVenueForm(!showVenueForm)
+                  setEditingVenue(null)
+                  setVenueForm({ name: '', address: '' })
+                }}
+                className="add-event-btn"
+              >
+                {showVenueForm ? t.cancel : (t.addVenue || 'Aggiungi Locale')}
+              </button>
+            </div>
+
+            {showVenueForm && (
+              <div className="admin-form-container">
+                <h2>{editingVenue ? (t.editVenue || 'Modifica Locale') : (t.addVenue || 'Aggiungi Locale')}</h2>
+                <form onSubmit={handleVenueSubmit} className="admin-form">
+                  <div className="form-group">
+                    <label>{t.venueName || 'Nome locale'} *</label>
+                    <input type="text" value={venueForm.name} onChange={e => setVenueForm({ ...venueForm, name: e.target.value })} required />
+                  </div>
+                  <div className="form-group">
+                    <label>{t.venueAddress || 'Indirizzo'}</label>
+                    <input type="text" value={venueForm.address} onChange={e => setVenueForm({ ...venueForm, address: e.target.value })} />
+                  </div>
+                  <div className="form-actions">
+                    <button type="submit" className="save-btn">{t.save}</button>
+                    <button type="button" onClick={() => { setShowVenueForm(false); setEditingVenue(null) }} className="cancel-btn">{t.cancel}</button>
+                  </div>
+                </form>
+              </div>
+            )}
+
+            <div className="admin-events-list">
+              <h2>{t.adminTabVenues || 'Locali'} ({venues.length})</h2>
+              {venues.length === 0 ? (
+                <p className="admin-no-messages">{t.noVenues || 'Nessun locale creato.'}</p>
+              ) : (
+                <div className="venues-list">
+                  {venues.map(venue => {
+                    const venueEvents = events.filter(e => e.venueId === venue.id)
+                    return (
+                      <div key={venue.id} className="admin-venue-card">
+                        <div className="admin-venue-header">
+                          <div>
+                            <h3 className="admin-venue-name">{venue.name}</h3>
+                            {venue.address && <p className="admin-venue-address">{venue.address}</p>}
+                            <span className="admin-venue-count">{venueEvents.length} {venueEvents.length === 1 ? 'evento' : 'eventi'}</span>
+                          </div>
+                          <div className="admin-event-actions">
+                            <button onClick={() => handleEditVenue(venue)} className="edit-btn">{t.editEvent ? t.editVenue || 'Modifica' : 'Modifica'}</button>
+                            <button onClick={() => handleDeleteVenue(venue.id)} className="delete-btn">{t.deleteEvent ? t.deleteVenue || 'Elimina' : 'Elimina'}</button>
+                          </div>
+                        </div>
+                        {venueEvents.length > 0 && (
+                          <ul className="admin-venue-events">
+                            {venueEvents.map(ev => (
+                              <li key={ev.id}>
+                                <span className="admin-venue-event-title">{ev.title}</span>
+                                <span className="admin-venue-event-date">{formatDate(ev.date)}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
             </div>
           </>
         )}

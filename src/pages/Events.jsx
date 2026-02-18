@@ -2,6 +2,7 @@ import React from 'react'
 import { useLanguage } from '../context/LanguageContext'
 import { translations } from '../i18n/translations'
 import Calendar from '../components/Calendar'
+import VenueList from '../components/VenueList'
 import './Pages.css'
 
 const Events = () => {
@@ -15,6 +16,7 @@ const Events = () => {
         <p>{t.eventsSubtitle}</p>
       </div>
       <Calendar />
+      <VenueList />
     </div>
   )
 }

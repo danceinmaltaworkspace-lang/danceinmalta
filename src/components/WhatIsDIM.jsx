@@ -1,18 +1,36 @@
 import React from 'react'
+import { useLanguage } from '../context/LanguageContext'
+import { translations } from '../i18n/translations'
 import './WhatIsDIM.css'
 
 const WhatIsDIM = () => {
+  const { language } = useLanguage()
+  const t = translations[language]
+
   return (
     <section className="what-is-dim section">
       <div className="container">
         <div className="what-is-dim-content">
-          <h2 className="what-is-dim-title">What is DIM?</h2>
-          <p className="what-is-dim-text">
-            Dance in Malta has been the reference point for fun on the island for years!
-          </p>
-          <p className="what-is-dim-text">
-            We specialize in the promotion and ticket sales for exclusive events, including parties, boat parties, and festivals.
-          </p>
+          <span className="what-is-dim-eyebrow">{t.whatIsDIMEyebrow}</span>
+          <h2 className="what-is-dim-title">{t.whatIsDIM}</h2>
+          <p className="what-is-dim-lead">{t.whatIsDIMText1}</p>
+          <p className="what-is-dim-text">{t.whatIsDIMText2}</p>
+          <div className="what-is-dim-stats">
+            <div className="dim-stat">
+              <span className="dim-stat-number">10+</span>
+              <span className="dim-stat-label">{t.statYears}</span>
+            </div>
+            <div className="dim-stat-divider" />
+            <div className="dim-stat">
+              <span className="dim-stat-number">50K+</span>
+              <span className="dim-stat-label">{t.statAudience}</span>
+            </div>
+            <div className="dim-stat-divider" />
+            <div className="dim-stat">
+              <span className="dim-stat-number">100+</span>
+              <span className="dim-stat-label">{t.statEvents}</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>

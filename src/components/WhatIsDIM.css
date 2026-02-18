@@ -1,34 +1,138 @@
 .what-is-dim {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: linear-gradient(135deg, #f8f9ff 0%, #ede9fe 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.what-is-dim::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .what-is-dim-content {
-  max-width: 800px;
+  max-width: 780px;
   margin: 0 auto;
   text-align: center;
   animation: fadeIn 0.8s ease-out;
 }
 
+.what-is-dim-eyebrow {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  background: rgba(139, 92, 246, 0.1);
+  padding: 0.35rem 1rem;
+  border-radius: 20px;
+  margin-bottom: 1.25rem;
+}
+
 .what-is-dim-title {
   font-size: 3rem;
   font-weight: 800;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   color: var(--primary-color);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.what-is-dim-lead {
+  font-size: 1.35rem;
+  font-weight: 500;
+  line-height: 1.7;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
 }
 
 .what-is-dim-text {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   line-height: 1.8;
-  color: var(--text-dark);
-  margin-bottom: 1.5rem;
+  color: var(--text-light);
+  margin-bottom: 2.5rem;
+}
+
+.what-is-dim-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2.5rem;
+  padding: 2rem 2.5rem;
+  background: var(--white);
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.12);
+}
+
+.dim-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.dim-stat-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dim-stat-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-light);
+}
+
+.dim-stat-divider {
+  width: 1px;
+  height: 50px;
+  background: rgba(139, 92, 246, 0.2);
 }
 
 @media (max-width: 768px) {
   .what-is-dim-title {
-    font-size: 2rem;
+    font-size: 2.2rem;
+  }
+
+  .what-is-dim-lead {
+    font-size: 1.15rem;
   }
 
   .what-is-dim-text {
     font-size: 1rem;
+  }
+
+  .what-is-dim-stats {
+    gap: 1.25rem;
+    padding: 1.5rem;
+  }
+
+  .dim-stat-number {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .what-is-dim-stats {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .dim-stat-divider {
+    width: 50px;
+    height: 1px;
   }
 }
