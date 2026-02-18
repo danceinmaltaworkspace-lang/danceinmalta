@@ -126,6 +126,10 @@ export const translations = {
     receivedAt: 'Ricevuto il',
     confirmDeleteRoom: 'Eliminare questa camera?',
 
+    // Contacts social
+    followUs: 'Seguici sui social',
+    venueNoEvents: 'Nessun evento in programma',
+
     // Footer
     footerTagline: 'Il tuo punto di riferimento per il divertimento sull\'isola!',
     quickLinks: 'Link rapidi',
@@ -263,6 +267,10 @@ export const translations = {
     noMessages: 'No messages yet.',
     receivedAt: 'Received at',
     confirmDeleteRoom: 'Delete this room?',
+
+    // Contacts social
+    followUs: 'Follow us on social',
+    venueNoEvents: 'No events scheduled',
 
     // Footer
     footerTagline: 'Your reference point for fun on the island!',
@@ -402,6 +410,10 @@ export const translations = {
     receivedAt: 'Recibido el',
     confirmDeleteRoom: '¿Eliminar esta habitación?',
 
+    // Contacts social
+    followUs: 'Síguenos en redes sociales',
+    venueNoEvents: 'No hay eventos programados',
+
     // Footer
     footerTagline: '¡Tu referencia para la diversión en la isla!',
     quickLinks: 'Enlaces rápidos',
@@ -539,6 +551,10 @@ export const translations = {
     noMessages: 'Aucun message pour l\'instant.',
     receivedAt: 'Reçu le',
     confirmDeleteRoom: 'Supprimer cette chambre ?',
+
+    // Contacts social
+    followUs: 'Suivez-nous sur les réseaux',
+    venueNoEvents: 'Aucun événement prévu',
 
     // Footer
     footerTagline: 'Votre référence pour le divertissement sur l\'île !',
