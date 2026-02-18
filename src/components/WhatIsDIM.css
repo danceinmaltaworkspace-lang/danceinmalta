@@ -60,48 +60,6 @@
   margin-bottom: 2.5rem;
 }
 
-.what-is-dim-stats {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
-  margin-top: 2.5rem;
-  padding: 2rem 2.5rem;
-  background: var(--white);
-  border-radius: 20px;
-  box-shadow: 0 4px 24px rgba(139, 92, 246, 0.1);
-  border: 1px solid rgba(139, 92, 246, 0.12);
-}
-
-.dim-stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.dim-stat-number {
-  font-size: 2.5rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.dim-stat-label {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--text-light);
-}
-
-.dim-stat-divider {
-  width: 1px;
-  height: 50px;
-  background: rgba(139, 92, 246, 0.2);
-}
-
 @media (max-width: 768px) {
   .what-is-dim-title {
     font-size: 2.2rem;
@@ -113,26 +71,5 @@
 
   .what-is-dim-text {
     font-size: 1rem;
-  }
-
-  .what-is-dim-stats {
-    gap: 1.25rem;
-    padding: 1.5rem;
-  }
-
-  .dim-stat-number {
-    font-size: 2rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .what-is-dim-stats {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .dim-stat-divider {
-    width: 50px;
-    height: 1px;
   }
 }
