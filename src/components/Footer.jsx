@@ -15,7 +15,7 @@ const Footer = () => {
         <div className="footer-content">
           <div className="footer-section">
             <Link to="/" className="footer-logo">
-              <CloudinaryImage imageId="EA2908C3-608B-4D24-B6D2-E0741979C248-removebg-preview_euiz0q" alt="Dance in Malta" width={200} height={75} crop="fit" className="footer-logo-img" />
+              <CloudinaryImage imageId="EA2908C3-608B-4D24-B6D2-E0741979C248-removebg-preview_euiz0q" alt="Dance in Malta" width={560} height={280} crop="fit" quality="auto:best" className="footer-logo-img" />
             </Link>
             <p className="footer-text">{t.footerTagline}</p>
           </div>
