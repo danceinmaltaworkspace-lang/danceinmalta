@@ -1,5 +1,5 @@
 .what-we-do {
-  background: #f8f9ff;
+  background: #0d0b1a;
 }
 
 .wwd-eyebrow {
@@ -8,46 +8,46 @@
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--accent-color);
-  background: rgba(139, 92, 246, 0.1);
+  color: rgba(196, 181, 253, 0.8);
+  border: 1px solid rgba(196, 181, 253, 0.25);
   padding: 0.3rem 1rem;
   border-radius: 20px;
   margin-bottom: 1rem;
 }
 
 .wwd-title {
+  color: var(--white) !important;
   margin-bottom: 0.75rem;
-  color: var(--primary-color);
 }
 
 .wwd-subtitle {
   text-align: center;
-  color: var(--text-light);
+  color: rgba(255, 255, 255, 0.5);
   font-size: 1.05rem;
   max-width: 560px;
   margin: 0 auto 3.5rem;
   line-height: 1.7;
 }
 
-/* ── 4-column grid (like reference) ── */
+/* ── 4-column grid ── */
 .wwd-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 /* ── Card ── */
 .wwd-card {
-  background: var(--white);
+  position: relative;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
-  border: 1px solid rgba(139, 92, 246, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  min-height: 340px;
   display: flex;
   flex-direction: column;
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.3s ease;
 }
 
 .wwd-card.visible {
@@ -56,71 +56,103 @@
 }
 
 .wwd-card:hover {
-  box-shadow: 0 16px 48px rgba(139, 92, 246, 0.14);
-  transform: translateY(-6px);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  transform: translateY(-8px);
 }
 
-/* ── Illustration area ── */
-.wwd-card-illus {
-  background: #f5f3ff;
+/* Background gradient layer */
+.wwd-card-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Glow on top */
+.wwd-card-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.wwd-card:hover .wwd-card-glow {
+  opacity: 1;
+}
+
+/* Content on top of layers */
+.wwd-card-inner {
+  position: relative;
+  z-index: 2;
+  padding: 2rem 1.75rem 2.25rem;
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  padding: 1.5rem 1rem 0;
-  min-height: 160px;
-  overflow: hidden;
-}
-
-.wwd-card-illus svg {
-  width: 100%;
-  max-width: 180px;
-  height: auto;
-  display: block;
-  transition: transform 0.4s ease;
-}
-
-.wwd-card:hover .wwd-card-illus svg {
-  transform: scale(1.06) translateY(-4px);
-}
-
-/* ── Body ── */
-.wwd-card-body {
-  padding: 1.25rem 1.5rem 1.75rem;
-  text-align: center;
+  flex-direction: column;
+  gap: 1rem;
   flex: 1;
 }
 
+/* Icon container */
+.wwd-card-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wwd-card-icon svg {
+  width: 36px;
+  height: 36px;
+}
+
+.wwd-card:hover .wwd-card-icon {
+  transform: scale(1.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Tag */
 .wwd-card-tag {
   display: inline-block;
   font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--accent-color);
-  background: rgba(139, 92, 246, 0.1);
-  padding: 0.2rem 0.75rem;
+  padding: 0.22rem 0.75rem;
   border-radius: 20px;
-  margin-bottom: 0.75rem;
+  border: 1px solid;
+  width: fit-content;
 }
 
+/* Title */
 .wwd-card-title {
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   font-weight: 700;
-  color: var(--primary-color);
-  margin-bottom: 0.5rem;
+  color: var(--white);
   line-height: 1.3;
+  margin: 0;
 }
 
+/* Description */
 .wwd-card-desc {
   font-size: 0.88rem;
-  color: var(--text-light);
-  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.7;
+  margin: 0;
 }
 
 /* ── Responsive ── */
 @media (max-width: 1100px) {
   .wwd-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .wwd-card {
+    min-height: 280px;
   }
 }
 
@@ -130,7 +162,11 @@
     gap: 1rem;
   }
 
-  .wwd-card-illus {
-    min-height: 130px;
+  .wwd-card {
+    min-height: 240px;
+  }
+
+  .wwd-card-inner {
+    padding: 1.75rem 1.5rem;
   }
 }
