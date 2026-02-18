@@ -10,7 +10,7 @@ const Events = () => {
   const t = translations[language]
 
   return (
-    <div className="page-container page-animate events-page-wrap">
+    <div className="page-container page-animate">
       <div className="page-header">
         <h1>{t.events}</h1>
         <p>{t.eventsSubtitle}</p>
