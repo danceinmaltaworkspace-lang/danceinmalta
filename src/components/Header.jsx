@@ -41,7 +41,7 @@ const Header = () => {
       <div className="header-container">
         <div className="logo">
           <Link to="/" className="logo-link">
-            <CloudinaryImage imageId="Tavola-disegno-1_actrjk" alt="Dance in Malta" width={180} height={50} crop="fit" className="logo-img" />
+            <CloudinaryImage imageId="Tavola-disegno-1_actrjk" alt="Dance in Malta" width={560} height={280} crop="fit" quality="auto:best" className="logo-img" />
           </Link>
         </div>
 
