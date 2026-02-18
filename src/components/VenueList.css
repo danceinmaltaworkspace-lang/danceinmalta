@@ -31,10 +31,30 @@
   padding: 1.25rem 1.5rem;
   border-bottom: 1px solid rgba(139, 92, 246, 0.1);
   background: linear-gradient(135deg, rgba(139, 92, 246, 0.06) 0%, transparent 100%);
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.venue-card-header-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(139, 92, 246, 0.12);
+  color: var(--accent-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.venue-card-header-icon svg {
+  width: 22px;
+  height: 22px;
 }
 
 .venue-card-name {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: var(--primary-color);
   margin-bottom: 0.2rem;
@@ -43,6 +63,24 @@
 .venue-card-address {
   font-size: 0.88rem;
   color: var(--text-light);
+  margin-bottom: 0.3rem;
+}
+
+.venue-card-count {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  background: rgba(139, 92, 246, 0.1);
+  padding: 0.15rem 0.6rem;
+  border-radius: 20px;
+}
+
+.venue-no-events {
+  padding: 1.25rem 1.5rem;
+  color: var(--text-light);
+  font-size: 0.9rem;
+  font-style: italic;
 }
 
 /* ── Events list ── */
