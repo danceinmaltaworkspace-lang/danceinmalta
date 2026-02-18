@@ -281,10 +281,10 @@
 
 @media (max-width: 768px) {
   .header-container {
-    padding: 1rem;
+    padding: 0.35rem 1rem;
   }
 
   .logo-img {
-    height: 90px;
+    height: 72px;
   }
 }
