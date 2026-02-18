@@ -1,7 +1,7 @@
 .footer {
   background: var(--primary-color);
   color: var(--white);
-  padding: 4rem 0 2rem;
+  padding: 5.5rem 0 2.5rem;
 }
 
 .footer-content {
@@ -132,7 +132,7 @@
 
 @media (max-width: 768px) {
   .footer {
-    padding: 3rem 0 1.5rem;
+    padding: 4rem 0 2rem;
   }
 
   .footer-content {

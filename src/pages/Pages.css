@@ -4,7 +4,8 @@
 }
 
 .page-container {
-  padding-top: 100px;
+  padding-top: 90px;
+  padding-bottom: 4rem;
   min-height: 100vh;
   overflow-x: hidden;
   max-width: 100%;
@@ -16,7 +17,7 @@
 
 .page-header {
   text-align: center;
-  padding: 4rem 2rem 2rem;
+  padding: 5rem 2rem 3.5rem;
   background: var(--hero-bg);
   color: var(--white);
   max-width: 100%;
