@@ -67,23 +67,18 @@ const UpcomingEvents = () => {
     }
   }
 
-  const formatDate = (date) => {
-    if (!date) return ''
-    const d = date?.toDate ? date.toDate() : new Date(date)
-    return d.toLocaleDateString('it-IT', { day: '2-digit', month: 'short' }).toUpperCase()
-  }
-
   return (
     <section id="events" className="upcoming-events section">
       <div className="container">
-        <span className="upcoming-eyebrow">{t.upcomingEvents}</span>
-        <h2 className="upcoming-title">{t.eventsSubtitle}</h2>
-
+        <h2 className="section-title">{t.upcomingEvents}</h2>
+        <p className="section-subtitle">
+          {t.eventsSubtitle}
+        </p>
         {events.length === 0 ? (
           <p className="upcoming-events-empty">{t.noUpcomingEvents}</p>
         ) : (
           <>
-            <div
+            <div 
               className="events-grid"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
@@ -94,15 +89,14 @@ const UpcomingEvents = () => {
                   key={event.id}
                   className={`event-card ${index === currentEventIndex ? 'mobile-active' : ''}`}
                   style={{ animationDelay: `${index * 0.1}s` }}
-                  onClick={() => handleEventClick(event)}
                 >
                   <div className="event-image">
                     {event.imageId ? (
                       <CloudinaryImage
                         imageId={event.imageId}
                         alt={event.title}
-                        width={600}
-                        height={400}
+                        width={400}
+                        height={225}
                         crop="fill"
                       />
                     ) : (
@@ -110,26 +104,20 @@ const UpcomingEvents = () => {
                         <span>{event.title || 'Event'}</span>
                       </div>
                     )}
-                    <div className="event-card-overlay" />
-                    {event.date && (
-                      <span className="event-date-badge">{formatDate(event.date)}</span>
+                  </div>
+                  <div className="event-content">
+                    <h3>{event.title}</h3>
+                    {event.externalLink ? (
+                      <button
+                        type="button"
+                        className="event-btn"
+                        onClick={() => handleEventClick(event)}
+                      >
+                        {t.buyTickets}
+                      </button>
+                    ) : (
+                      <Link to="/events" className="event-btn">{t.learnMore}</Link>
                     )}
-                    <div className="event-card-body">
-                      <h3 className="event-card-title">{event.title}</h3>
-                      {event.location && (
-                        <span className="event-card-location">
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                          {event.location}
-                        </span>
-                      )}
-                      {event.externalLink ? (
-                        <button type="button" className="event-btn" onClick={(e) => { e.stopPropagation(); handleEventClick(event) }}>
-                          {t.buyTickets} →
-                        </button>
-                      ) : (
-                        <Link to="/events" className="event-btn" onClick={e => e.stopPropagation()}>{t.learnMore} →</Link>
-                      )}
-                    </div>
                   </div>
                 </div>
               ))}
@@ -148,7 +136,7 @@ const UpcomingEvents = () => {
           </>
         )}
         <div className="section-footer">
-          <Link to="/events" className="see-all-btn">{t.seeAll} →</Link>
+          <Link to="/events" className="see-all-btn">{t.seeAll}</Link>
         </div>
       </div>
     </section>
