@@ -179,9 +179,10 @@ const Hero = () => {
                   <CloudinaryImage
                     imageId={slide.imageId}
                     alt={t[slide.labelKey] || slide.labelKey}
-                    width={900}
-                    height={506}
+                    width={1200}
+                    height={675}
                     crop="fill"
+                    quality="auto:best"
                     className="hero-slide-image"
                   />
                   <div className="hero-slide-overlay" />
