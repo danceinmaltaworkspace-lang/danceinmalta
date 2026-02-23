@@ -22,15 +22,15 @@
 .venue-card {
   background: var(--white);
   border-radius: 16px;
-  border: 1px solid rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(230, 57, 70, 0.12);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   overflow: hidden;
 }
 
 .venue-card-header {
   padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid rgba(139, 92, 246, 0.1);
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.06) 0%, transparent 100%);
+  border-bottom: 1px solid rgba(230, 57, 70, 0.1);
+  background: linear-gradient(135deg, rgba(230, 57, 70, 0.06) 0%, transparent 100%);
   display: flex;
   align-items: flex-start;
   gap: 1rem;
@@ -40,7 +40,7 @@
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: rgba(139, 92, 246, 0.12);
+  background: rgba(230, 57, 70, 0.12);
   color: var(--accent-color);
   display: flex;
   align-items: center;
@@ -71,7 +71,7 @@
   font-size: 0.78rem;
   font-weight: 600;
   color: var(--accent-color);
-  background: rgba(139, 92, 246, 0.1);
+  background: rgba(230, 57, 70, 0.1);
   padding: 0.15rem 0.6rem;
   border-radius: 20px;
 }
@@ -104,7 +104,7 @@
 }
 
 .venue-event-item:hover {
-  background: rgba(139, 92, 246, 0.05);
+  background: rgba(230, 57, 70, 0.05);
 }
 
 .venue-event-item:focus-visible {
