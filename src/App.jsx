@@ -8,6 +8,7 @@ import BackToTop from './components/BackToTop'
 import WhatsAppFloating from './components/WhatsAppFloating'
 import Home from './pages/Home'
 import Events from './pages/Events'
+import Experiences from './pages/Experiences'
 import Stay from './pages/Stay'
 import Contacts from './pages/Contacts'
 import DateEventsPage from './pages/DateEventsPage'
@@ -38,7 +39,9 @@ function App() {
             <Route path="/" element={<Layout><Home /></Layout>} />
             <Route path="/events" element={<Layout><Events /></Layout>} />
             <Route path="/events/date/:dateStr" element={<Layout><DateEventsPage /></Layout>} />
+            <Route path="/experiences" element={<Layout><Experiences /></Layout>} />
             <Route path="/stay" element={<Layout><Stay /></Layout>} />
+            <Route path="/contact" element={<Layout><Contacts /></Layout>} />
             <Route path="/contacts" element={<Layout><Contacts /></Layout>} />
             <Route path="/privacy-policy" element={<Layout><Privacy /></Layout>} />
             <Route path="/cookie-policy" element={<Layout><Cookies /></Layout>} />

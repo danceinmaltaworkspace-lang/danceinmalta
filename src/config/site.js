@@ -4,6 +4,6 @@
  * heroVideoUrl = URL embed esterno (YouTube/Vimeo). Se heroVideoId è vuoto, viene usato questo.
  */
 export const siteConfig = {
-  heroVideoId: '6994798_Cyber_Virtual_Reality_3840x2160_tm4jsb',
+  heroVideoId: 'VIDEO-2026-02-23-11-23-57_vahtwn',
   heroVideoUrl: '',
 }

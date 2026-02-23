@@ -8,13 +8,13 @@
   backdrop-filter: blur(20px) saturate(180%);
   transition: var(--transition);
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
-  border-bottom: 1px solid rgba(139, 92, 246, 0.08);
+  border-bottom: 1px solid rgba(230, 57, 70, 0.08);
 }
 
 .header.scrolled {
   background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 4px 16px rgba(139, 92, 246, 0.08);
-  border-bottom-color: rgba(139, 92, 246, 0.12);
+  box-shadow: 0 4px 16px rgba(230, 57, 70, 0.08);
+  border-bottom-color: rgba(230, 57, 70, 0.12);
 }
 
 .header-container {
@@ -208,7 +208,7 @@
     background: var(--white);
     border-radius: 10px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    border: 1px solid rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(230, 57, 70, 0.15);
     padding: 0.35rem;
     z-index: 1001;
     min-width: 100%;

@@ -35,7 +35,7 @@ const Footer = () => {
               </p>
               <p>
                 <strong>Email:</strong><br />
-                <a href="mailto:info@danceinmalta.com">info@danceinmalta.com</a>
+                <a href="mailto:infodanceinmalta@gmail.com">infodanceinmalta@gmail.com</a>
               </p>
               <p>
                 <strong>WhatsApp:</strong><br />
@@ -48,7 +48,9 @@ const Footer = () => {
             <h4 className="footer-subtitle">{t.quickLinks}</h4>
             <ul className="footer-links">
               <li><Link to="/events">{t.events}</Link></li>
+              <li><Link to="/experiences">{t.experiences}</Link></li>
               <li><Link to="/stay">{t.stay}</Link></li>
+              <li><Link to="/contact">{t.contact}</Link></li>
             </ul>
           </div>
 

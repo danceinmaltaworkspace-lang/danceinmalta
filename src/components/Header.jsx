@@ -31,9 +31,11 @@ const Header = () => {
 
   const languages = ['IT', 'EN', 'ES', 'FR']
   const menuItems = [
-    { key: 'home', path: '/' },
-    { key: 'events', path: '/events' },
-    { key: 'stay', path: '/stay' }
+    { key: 'home',        path: '/' },
+    { key: 'events',      path: '/events' },
+    { key: 'experiences', path: '/experiences' },
+    { key: 'stay',        path: '/stay' },
+    { key: 'contact',     path: '/contact' },
   ]
 
   return (
@@ -48,16 +50,14 @@ const Header = () => {
         <nav className={`nav ${isMobileMenuOpen ? 'open' : ''}`}>
           <ul className="nav-menu">
             {menuItems.map((item) => {
-              const isActive = location.pathname === item.path
+              const isActive = location.pathname === item.path ||
+                (item.path === '/contact' && location.pathname === '/contacts')
               return (
                 <li key={item.key}>
                   <Link to={item.path} className={isActive ? 'active' : ''}>{t[item.key]}</Link>
                 </li>
               )
             })}
-            <li>
-              <Link to="/contacts" className={location.pathname === '/contacts' ? 'active' : ''}>{t.contacts}</Link>
-            </li>
             <li>
               <a href="https://wa.me/35699027173" className="whatsapp-link" target="_blank" rel="noopener noreferrer">
                 WhatsApp

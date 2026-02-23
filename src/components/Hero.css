@@ -176,10 +176,10 @@
   opacity: 0;
   transform: translateX(100%);
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 2px solid rgba(139, 92, 246, 0.3);
+  border: 2px solid rgba(230, 57, 70, 0.3);
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(139, 92, 246, 0.2);
+  box-shadow: 0 8px 32px rgba(230, 57, 70, 0.2);
 }
 
 .hero-slide.active {
@@ -188,10 +188,64 @@
   z-index: 1;
 }
 
+.hero-slide-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  text-decoration: none;
+}
+
+.hero-slide-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
+  transition: background 0.3s ease;
+}
+
+.hero-slide-link:hover .hero-slide-overlay {
+  background: linear-gradient(to top, rgba(230,57,70,0.6) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
+}
+
+.hero-slide-label {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Syne', 'Inter', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--white);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+  white-space: nowrap;
+  transition: transform 0.3s ease, letter-spacing 0.3s ease;
+}
+
+.hero-slide-link:hover .hero-slide-label {
+  letter-spacing: 0.12em;
+}
+
 .hero-slide-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.hero-slide-link:hover .hero-slide-image {
+  transform: scale(1.04);
+}
+
+.hero-tagline {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  margin-bottom: 0.75rem;
+  animation: fadeIn 0.8s ease-out 0.1s both;
 }
 
 .hero-slider-btn {

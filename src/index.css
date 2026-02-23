@@ -9,20 +9,20 @@
   --primary-color: #0f0f23;
   --primary-light: #1a1a2e;
   --secondary-color: #f8f9fa;
-  --accent-color: #8b5cf6;
-  --accent-hover: #7c3aed;
-  --accent-light: #a78bfa;
+  --accent-color: #e63946;
+  --accent-hover: #c62e3a;
+  --accent-light: #ff6b76;
   --text-dark: #0f0f23;
   --text-light: #64748b;
   --white: #ffffff;
   --hero-bg: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  /* Elegant violet gradient */
-  --gradient-primary: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-  --gradient-secondary: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
-  --violet-1: #7c3aed;
-  --violet-2: #8b5cf6;
-  --violet-3: #a78bfa;
+  /* DIM red gradient */
+  --gradient-primary: linear-gradient(135deg, #e63946 0%, #c62e3a 100%);
+  --gradient-secondary: linear-gradient(135deg, #ff6b76 0%, #e63946 100%);
+  --violet-1: #c62e3a;
+  --violet-2: #e63946;
+  --violet-3: #ff6b76;
 }
 
 body {
@@ -114,7 +114,7 @@ button {
   margin-left: -55px;
   width: 0;
   height: 16px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 16'%3E%3Cpath d='M0,8 Q14,2 28,10 Q42,4 55,8 Q68,12 82,6 Q96,10 110,8' stroke='%237c3aed' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat left center;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 16'%3E%3Cpath d='M0,8 Q14,2 28,10 Q42,4 55,8 Q68,12 82,6 Q96,10 110,8' stroke='%23e63946' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat left center;
   background-size: 110px 100%;
   opacity: 0;
   transition: opacity 0.2s ease;

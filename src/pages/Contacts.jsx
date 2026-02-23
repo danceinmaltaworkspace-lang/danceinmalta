@@ -80,11 +80,11 @@ const Contacts = () => {
                     <span className="contact-card-value">+356 9902 7173</span>
                   </div>
                 </a>
-                <a href="mailto:info@danceinmalta.com" className="contact-card">
+                <a href="mailto:infodanceinmalta@gmail.com" className="contact-card">
                   <span className="contact-card-icon" aria-hidden>✉️</span>
                   <div className="contact-card-content">
                     <span className="contact-card-label">Email</span>
-                    <span className="contact-card-value">info@danceinmalta.com</span>
+                    <span className="contact-card-value">infodanceinmalta@gmail.com</span>
                   </div>
                 </a>
                 <a href="https://wa.me/35699027173" className="contact-card contact-card-whatsapp" target="_blank" rel="noopener noreferrer">

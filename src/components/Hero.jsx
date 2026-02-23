@@ -24,9 +24,9 @@ const Hero = () => {
   const showVideo = heroVideoId || heroVideoUrl
   
   const slides = [
-    { id: 1, imageId: 'samples/ecommerce/accessories-bag' },
-    { id: 2, imageId: 'samples/ecommerce/leather-bag-gray' },
-    { id: 3, imageId: 'samples/landscapes/architecture-signs' }
+    { id: 1, imageId: 'download-1_bekbj6',  labelKey: 'slideEvents',       path: '/events' },
+    { id: 2, imageId: 'download_gmgrbi',    labelKey: 'slideExperiences',   path: '/experiences' },
+    { id: 3, imageId: 'download-2_i6qyo8',  labelKey: 'slideStay',          path: '/stay' },
   ]
 
   const nextSlide = () => {
@@ -149,6 +149,7 @@ const Hero = () => {
         <h1 className="hero-title fade-in">
           {t.heroTitle}
         </h1>
+        <p className="hero-tagline fade-in">{t.heroTagline1}</p>
         <Link to="/events" className="hero-subtitle hero-subtitle-link fade-in">
           {t.heroSubtitle}
           <span className="hero-subtitle-arrow" aria-hidden> →</span>
@@ -174,20 +175,18 @@ const Hero = () => {
                 key={slide.id}
                 className={`hero-slide ${index === currentSlide ? 'active' : ''}`}
               >
-                {slide.imageId ? (
+                <Link to={slide.path} className="hero-slide-link">
                   <CloudinaryImage
                     imageId={slide.imageId}
-                    alt={`Event slide ${index + 1}`}
+                    alt={t[slide.labelKey] || slide.labelKey}
                     width={900}
                     height={506}
                     crop="fill"
                     className="hero-slide-image"
                   />
-                ) : (
-                  <div className="image-placeholder">
-                    <span>{slide.placeholder}</span>
-                  </div>
-                )}
+                  <div className="hero-slide-overlay" />
+                  <span className="hero-slide-label">{t[slide.labelKey]}</span>
+                </Link>
               </div>
             ))}
           </div>

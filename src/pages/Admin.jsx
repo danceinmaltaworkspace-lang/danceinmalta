@@ -39,6 +39,14 @@ const Admin = () => {
   const [editingVenue, setEditingVenue] = useState(null)
   const [venueForm, setVenueForm] = useState({ name: '', address: '' })
 
+  // Experiences
+  const [expList, setExpList] = useState([])
+  const [showExpForm, setShowExpForm] = useState(false)
+  const [editingExp, setEditingExp] = useState(null)
+  const [expForm, setExpForm] = useState({
+    title: '', category: '', description: '', price: '', imageId: '', externalLink: ''
+  })
+
   // Messages (contact form)
   const [messages, setMessages] = useState([])
   const [messagesError, setMessagesError] = useState(null)
@@ -80,6 +88,15 @@ const Admin = () => {
       (snap) => setVenues(snap.docs.map(d => ({ id: d.id, ...d.data() })))
     )
     return () => unsubVenues()
+  }, [user])
+
+  useEffect(() => {
+    if (!user) return
+    const unsubExp = onSnapshot(
+      query(collection(db, 'experiences'), orderBy('createdAt', 'desc')),
+      (snap) => setExpList(snap.docs.map(d => ({ id: d.id, ...d.data() })))
+    )
+    return () => unsubExp()
   }, [user])
 
   useEffect(() => {
@@ -256,6 +273,53 @@ const Admin = () => {
     }
   }
 
+  // —— Experiences ——
+  const handleExpSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const payload = {
+        title: expForm.title.trim(),
+        category: expForm.category.trim(),
+        description: expForm.description.trim(),
+        price: expForm.price.trim(),
+        imageId: expForm.imageId.trim(),
+        externalLink: expForm.externalLink.trim(),
+      }
+      if (editingExp) {
+        await updateDoc(doc(db, 'experiences', editingExp.id), payload)
+      } else {
+        await addDoc(collection(db, 'experiences'), { ...payload, createdAt: new Date() })
+      }
+      setExpForm({ title: '', category: '', description: '', price: '', imageId: '', externalLink: '' })
+      setEditingExp(null)
+      setShowExpForm(false)
+    } catch (err) {
+      alert('Error: ' + err.message)
+    }
+  }
+
+  const handleEditExp = (exp) => {
+    setEditingExp(exp)
+    setExpForm({
+      title: exp.title || '',
+      category: exp.category || '',
+      description: exp.description || '',
+      price: exp.price || '',
+      imageId: exp.imageId || '',
+      externalLink: exp.externalLink || '',
+    })
+    setShowExpForm(true)
+  }
+
+  const handleDeleteExp = async (id) => {
+    if (!window.confirm('Eliminare questa esperienza?')) return
+    try {
+      await deleteDoc(doc(db, 'experiences', id))
+    } catch (err) {
+      alert('Error: ' + err.message)
+    }
+  }
+
   if (loading) {
     return <div className="admin-loading">Loading...</div>
   }
@@ -285,6 +349,12 @@ const Admin = () => {
           onClick={() => setActiveTab('venues')}
         >
           {t.adminTabVenues || 'Locali'}
+        </button>
+        <button
+          className={`admin-tab ${activeTab === 'experiences' ? 'active' : ''}`}
+          onClick={() => setActiveTab('experiences')}
+        >
+          {t.experiences || 'Esperienze'}
         </button>
         <button
           className={`admin-tab ${activeTab === 'messages' ? 'active' : ''}`}
@@ -554,6 +624,91 @@ const Admin = () => {
                   })}
                 </div>
               )}
+            </div>
+          </>
+        )}
+
+        {/* —— ESPERIENZE —— */}
+        {activeTab === 'experiences' && (
+          <>
+            <div className="admin-actions">
+              <button
+                onClick={() => {
+                  setShowExpForm(!showExpForm)
+                  setEditingExp(null)
+                  setExpForm({ title: '', category: '', description: '', price: '', imageId: '', externalLink: '' })
+                }}
+                className="add-event-btn"
+              >
+                {showExpForm ? t.cancel : (t.addExperience || 'Aggiungi Esperienza')}
+              </button>
+            </div>
+
+            {showExpForm && (
+              <div className="admin-form-container">
+                <h2>{editingExp ? (t.editExperience || 'Modifica Esperienza') : (t.addExperience || 'Aggiungi Esperienza')}</h2>
+                <form onSubmit={handleExpSubmit} className="admin-form">
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label>{t.eventTitle || 'Titolo'} *</label>
+                      <input type="text" value={expForm.title} onChange={e => setExpForm({ ...expForm, title: e.target.value })} required />
+                    </div>
+                    <div className="form-group">
+                      <label>{t.expCategory || 'Categoria (es. Boat Party)'}</label>
+                      <input type="text" value={expForm.category} onChange={e => setExpForm({ ...expForm, category: e.target.value })} placeholder="Boat Party, Festival, Beach Party..." />
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label>{t.eventDescription || 'Descrizione'}</label>
+                    <textarea value={expForm.description} onChange={e => setExpForm({ ...expForm, description: e.target.value })} rows="4" />
+                  </div>
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label>{t.expPrice || 'Prezzo (es. €35)'}</label>
+                      <input type="text" value={expForm.price} onChange={e => setExpForm({ ...expForm, price: e.target.value })} placeholder="€35" />
+                    </div>
+                    <div className="form-group">
+                      <label>{t.eventImage || 'Immagine (Cloudinary ID)'}</label>
+                      <input type="text" value={expForm.imageId} onChange={e => setExpForm({ ...expForm, imageId: e.target.value })} placeholder="Cloudinary ID" />
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label>{t.eventLink || 'Link esterno'}</label>
+                    <input type="url" value={expForm.externalLink} onChange={e => setExpForm({ ...expForm, externalLink: e.target.value })} placeholder="https://..." />
+                  </div>
+                  <div className="form-actions">
+                    <button type="submit" className="save-btn">{t.save}</button>
+                    <button type="button" onClick={() => { setShowExpForm(false); setEditingExp(null) }} className="cancel-btn">{t.cancel}</button>
+                  </div>
+                </form>
+              </div>
+            )}
+
+            <div className="admin-events-list">
+              <h2>{t.experiences || 'Esperienze'} ({expList.length})</h2>
+              <div className="events-grid">
+                {expList.map(exp => (
+                  <div key={exp.id} className="admin-event-card">
+                    {exp.imageId && (
+                      <div className="admin-event-image">
+                        <img src={`https://res.cloudinary.com/dk99zyawv/image/upload/w_300,h_200,c_fill,q_auto/${exp.imageId}`} alt={exp.title} />
+                      </div>
+                    )}
+                    <div className="admin-event-content">
+                      <h3>{exp.title}</h3>
+                      {exp.category && <p><strong>Categoria:</strong> {exp.category}</p>}
+                      {exp.price && <p><strong>Prezzo:</strong> {exp.price}</p>}
+                      {exp.externalLink && (
+                        <a href={exp.externalLink} target="_blank" rel="noopener noreferrer" className="event-link">View →</a>
+                      )}
+                      <div className="admin-event-actions">
+                        <button onClick={() => handleEditExp(exp)} className="edit-btn">{t.editEvent || 'Modifica'}</button>
+                        <button onClick={() => handleDeleteExp(exp.id)} className="delete-btn">{t.deleteEvent || 'Elimina'}</button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </>
         )}
