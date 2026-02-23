@@ -9,7 +9,8 @@ const CloudinaryImage = ({
   height, 
   crop = 'fill', 
   quality = 'auto:best',
-  format = 'auto'
+  format = 'auto',
+  loading = 'lazy'
 }) => {
   if (!imageId) {
     return null;
@@ -28,7 +29,7 @@ const CloudinaryImage = ({
       srcSet={retinaUrl ? `${imageUrl} 1x, ${retinaUrl} 2x` : undefined}
       alt={alt}
       className={className}
-      loading="lazy"
+      loading={loading}
     />
   );
 };
