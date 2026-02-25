@@ -20,19 +20,28 @@ const UpcomingEvents = () => {
   useEffect(() => {
     const q = query(collection(db, 'events'), orderBy('date', 'asc'))
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const all = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }))
+      const all = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
       const today = new Date()
       today.setHours(0, 0, 0, 0)
-      const upcoming = all
-        .filter(event => {
-          const d = event.date?.toDate ? event.date.toDate() : new Date(event.date)
-          return d >= today
+
+      // Expand events with multiple dates into separate entries
+      const expanded = []
+      all.forEach(event => {
+        const allDates = [event.date]
+        if (Array.isArray(event.extraDates)) {
+          event.extraDates.forEach(ed => allDates.push(ed))
+        }
+        allDates.forEach(rawDate => {
+          const d = rawDate?.toDate ? rawDate.toDate() : new Date(rawDate)
+          if (d >= today) {
+            expanded.push({ ...event, date: rawDate, _instanceDate: d })
+          }
         })
-        .slice(0, UPCOMING_LIMIT)
-      setEvents(upcoming)
+      })
+
+      // Sort by date, deduplicate same event+date, take first LIMIT
+      expanded.sort((a, b) => a._instanceDate - b._instanceDate)
+      setEvents(expanded.slice(0, UPCOMING_LIMIT))
     })
     return () => unsubscribe()
   }, [])

@@ -52,21 +52,27 @@ const Calendar = () => {
     return days
   }
 
+  const toDateStr = (d) => {
+    const dt = d?.toDate ? d.toDate() : new Date(d)
+    const y = dt.getFullYear()
+    const m = String(dt.getMonth() + 1).padStart(2, '0')
+    const day = String(dt.getDate()).padStart(2, '0')
+    return `${y}-${m}-${day}`
+  }
+
   const getEventsForDate = (date) => {
     if (!date) return []
-    // Use local date to avoid timezone issues
     const year = date.getFullYear()
     const month = String(date.getMonth() + 1).padStart(2, '0')
     const day = String(date.getDate()).padStart(2, '0')
     const dateStr = `${year}-${month}-${day}`
-    
+
     return events.filter(event => {
-      const eventDate = event.date?.toDate ? event.date.toDate() : new Date(event.date)
-      const eventYear = eventDate.getFullYear()
-      const eventMonth = String(eventDate.getMonth() + 1).padStart(2, '0')
-      const eventDay = String(eventDate.getDate()).padStart(2, '0')
-      const eventDateStr = `${eventYear}-${eventMonth}-${eventDay}`
-      return eventDateStr === dateStr
+      if (toDateStr(event.date) === dateStr) return true
+      if (Array.isArray(event.extraDates)) {
+        return event.extraDates.some(ed => toDateStr(ed) === dateStr)
+      }
+      return false
     })
   }
 

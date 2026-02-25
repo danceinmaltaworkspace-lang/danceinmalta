@@ -22,7 +22,7 @@ const Admin = () => {
   const [showEventForm, setShowEventForm] = useState(false)
   const [editingEvent, setEditingEvent] = useState(null)
   const [eventForm, setEventForm] = useState({
-    title: '', date: '', location: '', description: '', imageId: '', externalLink: '', venueId: ''
+    title: '', date: '', extraDates: [], location: '', description: '', imageId: '', externalLink: '', venueId: ''
   })
 
   // Rooms (Stay)
@@ -145,16 +145,25 @@ const Admin = () => {
   const handleEventSubmit = async (e) => {
     e.preventDefault()
     try {
+      const extraDateObjects = (eventForm.extraDates || [])
+        .filter(d => d)
+        .map(d => new Date(d))
       const payload = {
-        ...eventForm,
-        date: new Date(eventForm.date)
+        title: eventForm.title,
+        date: new Date(eventForm.date),
+        extraDates: extraDateObjects,
+        location: eventForm.location,
+        description: eventForm.description,
+        imageId: eventForm.imageId,
+        externalLink: eventForm.externalLink,
+        venueId: eventForm.venueId,
       }
       if (editingEvent) {
         await updateDoc(doc(db, 'events', editingEvent.id), payload)
       } else {
         await addDoc(collection(db, 'events'), { ...payload, createdAt: new Date() })
       }
-      setEventForm({ title: '', date: '', location: '', description: '', imageId: '', externalLink: '', venueId: '' })
+      setEventForm({ title: '', date: '', extraDates: [], location: '', description: '', imageId: '', externalLink: '', venueId: '' })
       setEditingEvent(null)
       setShowEventForm(false)
     } catch (err) {
@@ -166,9 +175,16 @@ const Admin = () => {
   const handleEditEvent = (event) => {
     setEditingEvent(event)
     const d = event.date?.toDate ? event.date.toDate() : new Date(event.date)
+    const extra = Array.isArray(event.extraDates)
+      ? event.extraDates.map(ed => {
+          const dd = ed?.toDate ? ed.toDate() : new Date(ed)
+          return dd.toISOString().split('T')[0]
+        })
+      : []
     setEventForm({
       title: event.title || '',
       date: d.toISOString().split('T')[0],
+      extraDates: extra,
       location: event.location || '',
       description: event.description || '',
       imageId: event.imageId || '',
@@ -373,7 +389,7 @@ const Admin = () => {
                 onClick={() => {
                   setShowEventForm(!showEventForm)
                   setEditingEvent(null)
-                  setEventForm({ title: '', date: '', location: '', description: '', imageId: '', externalLink: '', venueId: '' })
+                  setEventForm({ title: '', date: '', extraDates: [], location: '', description: '', imageId: '', externalLink: '', venueId: '' })
                 }}
                 className="add-event-btn"
               >
@@ -391,8 +407,45 @@ const Admin = () => {
                       <input type="text" value={eventForm.title} onChange={e => setEventForm({ ...eventForm, title: e.target.value })} required />
                     </div>
                     <div className="form-group">
-                      <label>{t.eventDate} *</label>
+                      <label>{t.eventDate} * (data principale)</label>
                       <input type="date" value={eventForm.date} onChange={e => setEventForm({ ...eventForm, date: e.target.value })} required />
+                    </div>
+                  </div>
+
+                  {/* Date aggiuntive (ripetizioni) */}
+                  <div className="form-group">
+                    <label style={{ marginBottom: '0.5rem', display: 'block' }}>
+                      Date aggiuntive (ripetizioni) — opzionale
+                    </label>
+                    <div className="extra-dates-list">
+                      {(eventForm.extraDates || []).map((d, idx) => (
+                        <div key={idx} className="extra-date-row">
+                          <input
+                            type="date"
+                            value={d}
+                            onChange={e => {
+                              const updated = [...eventForm.extraDates]
+                              updated[idx] = e.target.value
+                              setEventForm({ ...eventForm, extraDates: updated })
+                            }}
+                          />
+                          <button
+                            type="button"
+                            className="remove-date-btn"
+                            onClick={() => {
+                              const updated = eventForm.extraDates.filter((_, i) => i !== idx)
+                              setEventForm({ ...eventForm, extraDates: updated })
+                            }}
+                          >✕</button>
+                        </div>
+                      ))}
+                      <button
+                        type="button"
+                        className="add-date-btn"
+                        onClick={() => setEventForm({ ...eventForm, extraDates: [...(eventForm.extraDates || []), ''] })}
+                      >
+                        + Aggiungi data
+                      </button>
                     </div>
                   </div>
                   <div className="form-group">
@@ -422,7 +475,7 @@ const Admin = () => {
                   </div>
                   <div className="form-actions">
                     <button type="submit" className="save-btn">{t.save}</button>
-                    <button type="button" onClick={() => { setShowEventForm(false); setEditingEvent(null) }} className="cancel-btn">{t.cancel}</button>
+                    <button type="button" onClick={() => { setShowEventForm(false); setEditingEvent(null); setEventForm({ title: '', date: '', extraDates: [], location: '', description: '', imageId: '', externalLink: '', venueId: '' }) }} className="cancel-btn">{t.cancel}</button>
                   </div>
                 </form>
               </div>

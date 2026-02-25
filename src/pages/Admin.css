@@ -437,6 +437,74 @@
   font-size: 0.82rem;
 }
 
+/* ── Extra dates ── */
+.extra-dates-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.extra-date-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.extra-date-row input[type="date"] {
+  flex: 1;
+  padding: 0.55rem 0.75rem;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+}
+
+.extra-date-row input[type="date"]:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+.remove-date-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: #fee2e2;
+  color: #dc2626;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.remove-date-btn:hover {
+  background: #fecaca;
+}
+
+.add-date-btn {
+  align-self: flex-start;
+  padding: 0.45rem 1rem;
+  background: rgba(230, 57, 70, 0.08);
+  color: var(--accent-color);
+  border: 1.5px dashed rgba(230, 57, 70, 0.4);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 0.25rem;
+}
+
+.add-date-btn:hover {
+  background: rgba(230, 57, 70, 0.14);
+  border-color: var(--accent-color);
+}
+
 @media (max-width: 768px) {
   .form-row {
     grid-template-columns: 1fr;
