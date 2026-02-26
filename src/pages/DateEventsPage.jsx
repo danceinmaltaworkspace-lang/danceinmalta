@@ -28,14 +28,25 @@ const DateEventsPage = () => {
     return () => unsubscribe()
   }, [])
 
+  const toDateStr = (d) => {
+    if (!d) return ''
+    if (typeof d === 'string') return d.slice(0, 10)
+    if (typeof d?.toDate === 'function') {
+      const dt = d.toDate()
+      return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`
+    }
+    if (d instanceof Date) {
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`
+    }
+    return ''
+  }
+
   const dateEvents = events.filter(event => {
-    const eventDate = event.date?.toDate ? event.date.toDate() : new Date(event.date)
-    // Use local date to avoid timezone issues
-    const year = eventDate.getFullYear()
-    const month = String(eventDate.getMonth() + 1).padStart(2, '0')
-    const day = String(eventDate.getDate()).padStart(2, '0')
-    const eventDateStr = `${year}-${month}-${day}`
-    return eventDateStr === dateStr
+    if (toDateStr(event.date) === dateStr) return true
+    if (Array.isArray(event.extraDates) && event.extraDates.length > 0) {
+      return event.extraDates.some(ed => toDateStr(ed) === dateStr)
+    }
+    return false
   })
 
   const formatDate = (date) => {

@@ -52,24 +52,30 @@ const Calendar = () => {
     return days
   }
 
+  // Convert any date value to 'YYYY-MM-DD' string (handles Timestamp, Date, string)
   const toDateStr = (d) => {
-    const dt = d?.toDate ? d.toDate() : new Date(d)
-    const y = dt.getFullYear()
-    const m = String(dt.getMonth() + 1).padStart(2, '0')
-    const day = String(dt.getDate()).padStart(2, '0')
-    return `${y}-${m}-${day}`
+    if (!d) return ''
+    // Already a plain string like '2026-04-15'
+    if (typeof d === 'string') return d.slice(0, 10)
+    // Firestore Timestamp
+    if (typeof d?.toDate === 'function') {
+      const dt = d.toDate()
+      return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`
+    }
+    // JS Date object
+    if (d instanceof Date) {
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`
+    }
+    return ''
   }
 
   const getEventsForDate = (date) => {
     if (!date) return []
-    const year = date.getFullYear()
-    const month = String(date.getMonth() + 1).padStart(2, '0')
-    const day = String(date.getDate()).padStart(2, '0')
-    const dateStr = `${year}-${month}-${day}`
+    const dateStr = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`
 
     return events.filter(event => {
       if (toDateStr(event.date) === dateStr) return true
-      if (Array.isArray(event.extraDates)) {
+      if (Array.isArray(event.extraDates) && event.extraDates.length > 0) {
         return event.extraDates.some(ed => toDateStr(ed) === dateStr)
       }
       return false

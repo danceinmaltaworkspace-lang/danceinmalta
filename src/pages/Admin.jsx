@@ -145,13 +145,12 @@ const Admin = () => {
   const handleEventSubmit = async (e) => {
     e.preventDefault()
     try {
-      const extraDateObjects = (eventForm.extraDates || [])
-        .filter(d => d)
-        .map(d => new Date(d))
+      // extraDates stored as plain strings 'YYYY-MM-DD' to avoid timezone issues
+      const extraDateStrings = (eventForm.extraDates || []).filter(d => d)
       const payload = {
         title: eventForm.title,
         date: new Date(eventForm.date),
-        extraDates: extraDateObjects,
+        extraDates: extraDateStrings,
         location: eventForm.location,
         description: eventForm.description,
         imageId: eventForm.imageId,
@@ -175,10 +174,12 @@ const Admin = () => {
   const handleEditEvent = (event) => {
     setEditingEvent(event)
     const d = event.date?.toDate ? event.date.toDate() : new Date(event.date)
+    // extraDates are stored as strings 'YYYY-MM-DD', but handle legacy Timestamp too
     const extra = Array.isArray(event.extraDates)
       ? event.extraDates.map(ed => {
+          if (typeof ed === 'string') return ed
           const dd = ed?.toDate ? ed.toDate() : new Date(ed)
-          return dd.toISOString().split('T')[0]
+          return `${dd.getFullYear()}-${String(dd.getMonth()+1).padStart(2,'0')}-${String(dd.getDate()).padStart(2,'0')}`
         })
       : []
     setEventForm({
