@@ -25,6 +25,9 @@ const Admin = () => {
     title: '', date: '', extraDates: [], location: '', description: '', imageId: '', externalLink: '', venueId: ''
   })
 
+  // Recurrence quick-fill
+  const [recurrence, setRecurrence] = useState({ startDate: '', endDate: '', dayOfWeek: '3' })
+
   // Rooms (Stay)
   const [rooms, setRooms] = useState([])
   const [showRoomForm, setShowRoomForm] = useState(false)
@@ -147,6 +150,7 @@ const Admin = () => {
     try {
       // extraDates stored as plain strings 'YYYY-MM-DD' to avoid timezone issues
       const extraDateStrings = (eventForm.extraDates || []).filter(d => d)
+      console.log('[Admin] Saving event extraDates:', extraDateStrings)
       const payload = {
         title: eventForm.title,
         date: new Date(eventForm.date),
@@ -202,6 +206,43 @@ const Admin = () => {
     } catch (err) {
       alert('Error: ' + err.message)
     }
+  }
+
+  const generateRecurringDates = () => {
+    const { startDate, endDate, dayOfWeek } = recurrence
+    if (!startDate || !endDate || !dayOfWeek) {
+      alert('Compila data inizio, data fine e giorno della settimana.')
+      return
+    }
+    const start = new Date(startDate)
+    const end = new Date(endDate)
+    if (start > end) { alert('La data di inizio deve essere prima della data di fine.'); return }
+
+    const targetDay = parseInt(dayOfWeek, 10) // 0=Dom, 1=Lun, ..., 6=Sab
+    const generated = []
+    const cur = new Date(start)
+
+    // Advance to first occurrence of targetDay
+    while (cur.getDay() !== targetDay) {
+      cur.setDate(cur.getDate() + 1)
+    }
+
+    while (cur <= end) {
+      const str = `${cur.getFullYear()}-${String(cur.getMonth()+1).padStart(2,'0')}-${String(cur.getDate()).padStart(2,'0')}`
+      generated.push(str)
+      cur.setDate(cur.getDate() + 7)
+    }
+
+    if (generated.length === 0) {
+      alert('Nessuna data trovata nel periodo selezionato per quel giorno.')
+      return
+    }
+
+    // Merge with existing extraDates (avoid duplicates)
+    const existing = eventForm.extraDates || []
+    const merged = [...new Set([...existing, ...generated])]
+    setEventForm(prev => ({ ...prev, extraDates: merged }))
+    alert(`Aggiunte ${generated.length} date!`)
   }
 
   // —— Rooms ——
@@ -413,6 +454,53 @@ const Admin = () => {
                     </div>
                   </div>
 
+                  {/* Ricorrenza rapida */}
+                  <div className="form-group recurrence-box">
+                    <label className="recurrence-label">
+                      ⚡ Ricorrenza rapida — genera date automaticamente
+                    </label>
+                    <div className="recurrence-row">
+                      <div className="recurrence-field">
+                        <span>Da</span>
+                        <input
+                          type="date"
+                          value={recurrence.startDate}
+                          onChange={e => setRecurrence(r => ({ ...r, startDate: e.target.value }))}
+                        />
+                      </div>
+                      <div className="recurrence-field">
+                        <span>A</span>
+                        <input
+                          type="date"
+                          value={recurrence.endDate}
+                          onChange={e => setRecurrence(r => ({ ...r, endDate: e.target.value }))}
+                        />
+                      </div>
+                      <div className="recurrence-field">
+                        <span>Ogni</span>
+                        <select
+                          value={recurrence.dayOfWeek}
+                          onChange={e => setRecurrence(r => ({ ...r, dayOfWeek: e.target.value }))}
+                        >
+                          <option value="1">Lunedì</option>
+                          <option value="2">Martedì</option>
+                          <option value="3">Mercoledì</option>
+                          <option value="4">Giovedì</option>
+                          <option value="5">Venerdì</option>
+                          <option value="6">Sabato</option>
+                          <option value="0">Domenica</option>
+                        </select>
+                      </div>
+                      <button
+                        type="button"
+                        className="generate-dates-btn"
+                        onClick={generateRecurringDates}
+                      >
+                        Genera date
+                      </button>
+                    </div>
+                  </div>
+
                   {/* Date aggiuntive (ripetizioni) */}
                   <div className="form-group">
                     <label style={{ marginBottom: '0.5rem', display: 'block' }}>
@@ -472,7 +560,7 @@ const Admin = () => {
                   </div>
                   <div className="form-group">
                     <label>{t.eventLink} *</label>
-                    <input type="url" value={eventForm.externalLink} onChange={e => setEventForm({ ...eventForm, externalLink: e.target.value })} placeholder="https://..." required />
+                    <input type="text" value={eventForm.externalLink} onChange={e => setEventForm({ ...eventForm, externalLink: e.target.value })} placeholder="https://..." required />
                   </div>
                   <div className="form-actions">
                     <button type="submit" className="save-btn">{t.save}</button>

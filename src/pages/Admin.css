@@ -505,6 +505,95 @@
   border-color: var(--accent-color);
 }
 
+/* ===== RICORRENZA RAPIDA ===== */
+
+.recurrence-box {
+  background: rgba(230, 57, 70, 0.05);
+  border: 1.5px solid rgba(230, 57, 70, 0.2);
+  border-radius: 10px;
+  padding: 1rem 1.25rem 1.25rem;
+}
+
+.recurrence-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  letter-spacing: 0.02em;
+  margin-bottom: 0.85rem;
+}
+
+.recurrence-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.recurrence-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.recurrence-field span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.recurrence-field input[type="date"],
+.recurrence-field select {
+  padding: 0.5rem 0.75rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 6px;
+  color: #fff;
+  font-size: 0.9rem;
+  min-width: 140px;
+}
+
+.recurrence-field select {
+  min-width: 130px;
+}
+
+.generate-dates-btn {
+  padding: 0.6rem 1.25rem;
+  background: var(--accent-color);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  white-space: nowrap;
+  align-self: flex-end;
+}
+
+.generate-dates-btn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .recurrence-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .recurrence-field input[type="date"],
+  .recurrence-field select {
+    width: 100%;
+  }
+
+  .generate-dates-btn {
+    width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
   .form-row {
     grid-template-columns: 1fr;

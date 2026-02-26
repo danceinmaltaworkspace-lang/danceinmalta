@@ -4,15 +4,15 @@ import WhatIsDIM from '../components/WhatIsDIM'
 import Testimonials from '../components/Testimonials'
 import WhyUs from '../components/WhyUs'
 import UpcomingEvents from '../components/UpcomingEvents'
-import TopExperiences from '../components/TopExperiences'
+import ExperiencesSection from '../components/ExperiencesSection'
 
 const Home = () => {
   return (
     <>
       <Hero />
       <UpcomingEvents />
-      <TopExperiences />
       <WhatIsDIM />
+      <ExperiencesSection />
       <Testimonials />
       <WhyUs />
     </>

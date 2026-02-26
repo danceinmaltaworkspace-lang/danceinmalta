@@ -23,6 +23,11 @@ const Calendar = () => {
         id: doc.id,
         ...doc.data()
       }))
+      console.log('[Calendar] Events loaded:', eventsData.map(e => ({
+        title: e.title,
+        extraDates: e.extraDates,
+        extraDatesType: e.extraDates ? typeof e.extraDates[0] : 'none'
+      })))
       setEvents(eventsData)
     })
 
@@ -52,19 +57,28 @@ const Calendar = () => {
     return days
   }
 
-  // Convert any date value to 'YYYY-MM-DD' string (handles Timestamp, Date, string)
+  // Convert ANY date value to 'YYYY-MM-DD' — handles all Firestore/JS formats
   const toDateStr = (d) => {
     if (!d) return ''
-    // Already a plain string like '2026-04-15'
-    if (typeof d === 'string') return d.slice(0, 10)
-    // Firestore Timestamp
-    if (typeof d?.toDate === 'function') {
-      const dt = d.toDate()
-      return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`
-    }
-    // JS Date object
-    if (d instanceof Date) {
-      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`
+    try {
+      // Plain string '2026-04-15' or ISO string
+      if (typeof d === 'string') return d.slice(0, 10)
+      // Firestore Timestamp with .toDate() method
+      if (typeof d.toDate === 'function') {
+        const dt = d.toDate()
+        return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`
+      }
+      // Plain Firestore Timestamp object { seconds, nanoseconds }
+      if (typeof d.seconds === 'number') {
+        const dt = new Date(d.seconds * 1000)
+        return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`
+      }
+      // JS Date object
+      if (d instanceof Date) {
+        return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`
+      }
+    } catch {
+      return ''
     }
     return ''
   }
@@ -218,9 +232,10 @@ const Calendar = () => {
                         <CloudinaryImage
                           imageId={event.imageId}
                           alt={event.title}
-                          width={400}
-                          height={220}
+                          width={600}
+                          height={800}
                           crop="fill"
+                          quality="auto:best"
                         />
                       </div>
                     )}
@@ -251,9 +266,10 @@ const Calendar = () => {
                   <CloudinaryImage
                     imageId={selectedEvent.imageId}
                     alt={selectedEvent.title}
-                    width={800}
-                    height={400}
+                    width={700}
+                    height={933}
                     crop="fill"
+                    quality="auto:best"
                   />
                 ) : (
                   <div className="calendar-modal-placeholder" />

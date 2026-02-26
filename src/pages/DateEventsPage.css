@@ -110,7 +110,7 @@
 
 .date-event-card-image {
   width: 100%;
-  height: 240px;
+  aspect-ratio: 3/4;
   overflow: hidden;
   background: var(--secondary-color);
   position: relative;

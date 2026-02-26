@@ -69,6 +69,14 @@ export const translations = {
     noExperiences: 'Nessuna esperienza disponibile al momento.',
     discoverExperience: 'Scopri',
 
+    // Experiences promo section (homepage)
+    expPromoTitle: 'Esperienze',
+    expPromoSubtitle: 'Una vasta selezione di esperienze ricorrenti a Malta come escursioni, giri in barca, tour in quad, visite e tanto altro per rendere unica la tua vacanza.',
+    expPromoLabel1: 'Escursioni',
+    expPromoLabel2: 'Giri in Barca',
+    expPromoLabel3: 'Tour & Visite',
+    expPromoBtn: 'Scopri tutte le esperienze',
+
     // Contacts
     contactTitle: 'Contattaci',
     contactSubtitle: 'Mettiti in contatto con noi per qualsiasi domanda, prenotazione o informazione sui nostri eventi ed esperienze.',
@@ -224,6 +232,14 @@ export const translations = {
     topExperiencesSubtitle: 'The best events in Malta chosen to make your trip a memorable experience.',
     noExperiences: 'No experiences available at the moment.',
     discoverExperience: 'Discover',
+
+    // Experiences promo section (homepage)
+    expPromoTitle: 'Experiences',
+    expPromoSubtitle: 'A wide selection of recurring experiences in Malta — excursions, boat trips, quad tours, sightseeing and much more to make your holiday truly unique.',
+    expPromoLabel1: 'Excursions',
+    expPromoLabel2: 'Boat Trips',
+    expPromoLabel3: 'Tours & Sightseeing',
+    expPromoBtn: 'Discover all experiences',
 
     // Contacts
     contactTitle: 'Contact Us',
@@ -381,6 +397,14 @@ export const translations = {
     noExperiences: 'No hay experiencias disponibles por el momento.',
     discoverExperience: 'Descubrir',
 
+    // Experiences promo section (homepage)
+    expPromoTitle: 'Experiencias',
+    expPromoSubtitle: 'Una amplia selección de experiencias recurrentes en Malta: excursiones, paseos en barco, tours en quad, visitas y mucho más para hacer tus vacaciones únicas.',
+    expPromoLabel1: 'Excursiones',
+    expPromoLabel2: 'Paseos en Barco',
+    expPromoLabel3: 'Tours y Visitas',
+    expPromoBtn: 'Descubre todas las experiencias',
+
     // Contacts
     contactTitle: 'Contáctanos',
     contactSubtitle: 'Ponte en contacto con nosotros para cualquier pregunta, reserva o información sobre nuestros eventos y experiencias.',
@@ -536,6 +560,14 @@ export const translations = {
     topExperiencesSubtitle: 'Les meilleurs événements à Malte choisis pour faire de votre voyage une expérience mémorable.',
     noExperiences: 'Aucune expérience disponible pour le moment.',
     discoverExperience: 'Découvrir',
+
+    // Experiences promo section (homepage)
+    expPromoTitle: 'Expériences',
+    expPromoSubtitle: 'Une vaste sélection d\'expériences récurrentes à Malte : excursions, balades en bateau, tours en quad, visites et bien plus encore pour rendre vos vacances inoubliables.',
+    expPromoLabel1: 'Excursions',
+    expPromoLabel2: 'Balades en Bateau',
+    expPromoLabel3: 'Tours & Visites',
+    expPromoBtn: 'Découvrir toutes les expériences',
 
     // Contacts
     contactTitle: 'Contactez-nous',

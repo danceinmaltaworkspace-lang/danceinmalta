@@ -1,0 +1,210 @@
+/* ===== EXPERIENCES PROMO SECTION ===== */
+
+.exp-section {
+  padding: 5rem 0;
+  background: var(--bg-dark, #0a0a0a);
+}
+
+.exp-section-header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 3.5rem;
+}
+
+.exp-section-eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-color, #e63946);
+  margin-bottom: 0.75rem;
+}
+
+.exp-section-title {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  margin-bottom: 1.25rem;
+  color: var(--text-primary, #fff);
+}
+
+.exp-section-subtitle {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.65);
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+/* ===== 3-COLUMN GRID ===== */
+
+.exp-section-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 3rem;
+}
+
+/* ===== CARD ===== */
+
+.exp-section-card {
+  position: relative;
+  display: block;
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  aspect-ratio: 3 / 4;
+  cursor: pointer;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  transition: transform 0.35s cubic-bezier(.25,.8,.25,1),
+              box-shadow 0.35s ease;
+}
+
+.exp-section-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 20px 50px rgba(230, 57, 70, 0.25);
+}
+
+.exp-section-img-wrap {
+  position: absolute;
+  inset: 0;
+}
+
+.exp-section-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+  display: block;
+}
+
+.exp-section-card:hover .exp-section-img {
+  transform: scale(1.07);
+}
+
+/* Gradient overlay — always visible, stronger on hover */
+.exp-section-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.80) 0%,
+    rgba(0, 0, 0, 0.25) 55%,
+    transparent 100%
+  );
+  transition: background 0.35s ease;
+}
+
+.exp-section-card:hover .exp-section-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(230, 57, 70, 0.70) 0%,
+    rgba(0, 0, 0, 0.30) 55%,
+    transparent 100%
+  );
+}
+
+/* Label at the bottom of each card */
+.exp-section-card-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem 1.5rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Syne', 'Inter', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.exp-section-card-arrow {
+  font-size: 1.1rem;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.exp-section-card:hover .exp-section-card-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ===== CTA BUTTON ===== */
+
+.exp-section-footer {
+  display: flex;
+  justify-content: center;
+}
+
+.exp-section-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 2.4rem;
+  background: var(--accent-color, #e63946);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 4px 20px rgba(230, 57, 70, 0.35);
+}
+
+.exp-section-btn:hover {
+  background: var(--accent-hover, #c62e3a);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(230, 57, 70, 0.45);
+}
+
+.exp-section-btn-arrow {
+  transition: transform 0.25s ease;
+}
+
+.exp-section-btn:hover .exp-section-btn-arrow {
+  transform: translateX(4px);
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 900px) {
+  .exp-section-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .exp-section-grid .exp-section-card:last-child {
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 7;
+  }
+}
+
+@media (max-width: 580px) {
+  .exp-section {
+    padding: 3.5rem 0;
+  }
+
+  .exp-section-header {
+    margin-bottom: 2rem;
+  }
+
+  .exp-section-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .exp-section-grid .exp-section-card:last-child {
+    grid-column: auto;
+    aspect-ratio: 3 / 4;
+  }
+
+  .exp-section-card-label {
+    font-size: 1.1rem;
+    padding: 1.25rem;
+  }
+}

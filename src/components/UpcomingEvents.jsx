@@ -24,24 +24,38 @@ const UpcomingEvents = () => {
       const today = new Date()
       today.setHours(0, 0, 0, 0)
 
-      // Expand events with multiple dates into separate entries
-      const expanded = []
+      const toDate = (rawDate) => {
+        if (!rawDate) return null
+        if (typeof rawDate.toDate === 'function') return rawDate.toDate()
+        if (typeof rawDate.seconds === 'number') return new Date(rawDate.seconds * 1000)
+        const d = new Date(rawDate)
+        return isNaN(d) ? null : d
+      }
+
+      // Each event appears ONCE — with the next upcoming date among all its dates
+      const withNextDate = []
       all.forEach(event => {
-        const allDates = [event.date]
-        if (Array.isArray(event.extraDates)) {
-          event.extraDates.forEach(ed => allDates.push(ed))
-        }
-        allDates.forEach(rawDate => {
-          const d = rawDate?.toDate ? rawDate.toDate() : new Date(rawDate)
-          if (d >= today) {
-            expanded.push({ ...event, date: rawDate, _instanceDate: d })
+        const allRawDates = [event.date, ...(Array.isArray(event.extraDates) ? event.extraDates : [])]
+
+        let nextRaw = null
+        let nextDate = null
+
+        allRawDates.forEach(raw => {
+          const d = toDate(raw)
+          if (!d || d < today) return
+          if (!nextDate || d < nextDate) {
+            nextDate = d
+            nextRaw = raw
           }
         })
+
+        if (nextDate) {
+          withNextDate.push({ ...event, date: nextRaw, _instanceDate: nextDate })
+        }
       })
 
-      // Sort by date, deduplicate same event+date, take first LIMIT
-      expanded.sort((a, b) => a._instanceDate - b._instanceDate)
-      setEvents(expanded.slice(0, UPCOMING_LIMIT))
+      withNextDate.sort((a, b) => a._instanceDate - b._instanceDate)
+      setEvents(withNextDate.slice(0, UPCOMING_LIMIT))
     })
     return () => unsubscribe()
   }, [])
@@ -76,6 +90,19 @@ const UpcomingEvents = () => {
     }
   }
 
+  const formatEventDate = (rawDate) => {
+    if (!rawDate) return ''
+    let d
+    if (typeof rawDate.toDate === 'function') d = rawDate.toDate()
+    else if (typeof rawDate.seconds === 'number') d = new Date(rawDate.seconds * 1000)
+    else d = new Date(rawDate)
+    if (isNaN(d)) return ''
+    return d.toLocaleDateString(
+      language === 'IT' ? 'it-IT' : language === 'ES' ? 'es-ES' : language === 'FR' ? 'fr-FR' : 'en-GB',
+      { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' }
+    )
+  }
+
   return (
     <section id="events" className="upcoming-events section">
       <div className="container">
@@ -104,9 +131,11 @@ const UpcomingEvents = () => {
                       <CloudinaryImage
                         imageId={event.imageId}
                         alt={event.title}
-                        width={400}
-                        height={225}
+                        width={600}
+                        height={800}
                         crop="fill"
+                        quality="auto:best"
+                        loading="eager"
                       />
                     ) : (
                       <div className="image-placeholder">
@@ -115,7 +144,16 @@ const UpcomingEvents = () => {
                     )}
                   </div>
                   <div className="event-content">
+                    <div className="event-meta">
+                      <span className="event-date-badge">📅 {formatEventDate(event.date)}</span>
+                      {event.location && (
+                        <span className="event-location-badge">📍 {event.location}</span>
+                      )}
+                    </div>
                     <h3>{event.title}</h3>
+                    {event.description && (
+                      <p className="event-description-preview">{event.description}</p>
+                    )}
                     {event.externalLink ? (
                       <button
                         type="button"

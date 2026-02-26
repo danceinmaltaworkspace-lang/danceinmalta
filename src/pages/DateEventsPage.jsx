@@ -30,14 +30,20 @@ const DateEventsPage = () => {
 
   const toDateStr = (d) => {
     if (!d) return ''
-    if (typeof d === 'string') return d.slice(0, 10)
-    if (typeof d?.toDate === 'function') {
-      const dt = d.toDate()
-      return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`
-    }
-    if (d instanceof Date) {
-      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`
-    }
+    try {
+      if (typeof d === 'string') return d.slice(0, 10)
+      if (typeof d.toDate === 'function') {
+        const dt = d.toDate()
+        return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`
+      }
+      if (typeof d.seconds === 'number') {
+        const dt = new Date(d.seconds * 1000)
+        return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`
+      }
+      if (d instanceof Date) {
+        return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`
+      }
+    } catch { return '' }
     return ''
   }
 
@@ -123,8 +129,9 @@ const DateEventsPage = () => {
                         imageId={event.imageId}
                         alt={event.title}
                         width={600}
-                        height={340}
+                        height={800}
                         crop="fill"
+                        quality="auto:best"
                       />
                     </div>
                   )}
