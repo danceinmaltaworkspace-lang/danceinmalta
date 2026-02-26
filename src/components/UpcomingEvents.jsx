@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { collection, query, onSnapshot, orderBy } from 'firebase/firestore'
 import { db } from '../config/firebase'
@@ -8,6 +8,7 @@ import CloudinaryImage from './CloudinaryImage'
 import './UpcomingEvents.css'
 
 const UPCOMING_LIMIT = 6
+const AUTO_SCROLL_INTERVAL = 3000
 
 const UpcomingEvents = () => {
   const { language } = useLanguage()
@@ -16,6 +17,9 @@ const UpcomingEvents = () => {
   const [currentEventIndex, setCurrentEventIndex] = useState(0)
   const [touchStart, setTouchStart] = useState(0)
   const [touchEnd, setTouchEnd] = useState(0)
+  const gridRef = useRef(null)
+  const autoScrollRef = useRef(null)
+  const isPausedRef = useRef(false)
 
   useEffect(() => {
     const q = query(collection(db, 'events'), orderBy('date', 'asc'))
@@ -60,8 +64,39 @@ const UpcomingEvents = () => {
     return () => unsubscribe()
   }, [])
 
+  const scrollToIndex = useCallback((index, smooth = true) => {
+    const grid = gridRef.current
+    if (!grid) return
+    const card = grid.children[index]
+    if (!card) return
+    grid.scrollTo({ left: card.offsetLeft - grid.offsetLeft, behavior: smooth ? 'smooth' : 'instant' })
+  }, [])
+
+  const startAutoScroll = useCallback(() => {
+    if (autoScrollRef.current) clearInterval(autoScrollRef.current)
+    autoScrollRef.current = setInterval(() => {
+      if (isPausedRef.current || !gridRef.current) return
+      setCurrentEventIndex(prev => {
+        const next = prev + 1 >= events.length ? 0 : prev + 1
+        scrollToIndex(next)
+        return next
+      })
+    }, AUTO_SCROLL_INTERVAL)
+  }, [events.length, scrollToIndex])
+
+  // Start auto-scroll only on mobile
+  useEffect(() => {
+    if (events.length < 2) return
+    const isMobile = window.innerWidth <= 768
+    if (!isMobile) return
+    startAutoScroll()
+    return () => clearInterval(autoScrollRef.current)
+  }, [events.length, startAutoScroll])
+
   const handleTouchStart = (e) => {
+    isPausedRef.current = true
     setTouchStart(e.targetTouches[0].clientX)
+    setTouchEnd(0)
   }
 
   const handleTouchMove = (e) => {
@@ -69,19 +104,25 @@ const UpcomingEvents = () => {
   }
 
   const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return
-    const distance = touchStart - touchEnd
-    const isLeftSwipe = distance > 50
-    const isRightSwipe = distance < -50
-
-    if (isLeftSwipe && currentEventIndex < events.length - 1) {
-      setCurrentEventIndex(prev => prev + 1)
+    if (!touchStart || !touchEnd) {
+      isPausedRef.current = false
+      return
     }
-    if (isRightSwipe && currentEventIndex > 0) {
-      setCurrentEventIndex(prev => prev - 1)
+    const distance = touchStart - touchEnd
+    if (Math.abs(distance) > 50) {
+      const isLeftSwipe = distance > 0
+      setCurrentEventIndex(prev => {
+        const next = isLeftSwipe
+          ? Math.min(prev + 1, events.length - 1)
+          : Math.max(prev - 1, 0)
+        scrollToIndex(next)
+        return next
+      })
     }
     setTouchStart(0)
     setTouchEnd(0)
+    // Resume auto-scroll after 4s of inactivity
+    setTimeout(() => { isPausedRef.current = false }, 4000)
   }
 
   const handleEventClick = (event) => {
@@ -114,7 +155,8 @@ const UpcomingEvents = () => {
           <p className="upcoming-events-empty">{t.noUpcomingEvents}</p>
         ) : (
           <>
-            <div 
+            <div
+              ref={gridRef}
               className="events-grid"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}

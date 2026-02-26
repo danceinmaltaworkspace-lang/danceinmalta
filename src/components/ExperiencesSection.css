@@ -176,35 +176,76 @@
 @media (max-width: 900px) {
   .exp-section-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
 
+  /* All 3 cards: first two in a row, third spans full width in landscape */
   .exp-section-grid .exp-section-card:last-child {
     grid-column: 1 / -1;
     aspect-ratio: 16 / 7;
   }
 }
 
-@media (max-width: 580px) {
+@media (max-width: 600px) {
   .exp-section {
-    padding: 3.5rem 0;
+    padding: 3rem 0;
   }
 
   .exp-section-header {
-    margin-bottom: 2rem;
+    margin-bottom: 1.75rem;
+    padding: 0 1rem;
   }
 
+  .exp-section-subtitle {
+    font-size: 0.95rem;
+  }
+
+  /* Horizontal scroll on small mobile — compact and navigable */
   .exp-section-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    gap: 0.85rem;
+    padding: 0 1rem 1rem;
+    margin-bottom: 1.5rem;
+    /* Hide scrollbar */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .exp-section-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .exp-section-card {
+    flex: 0 0 72vw;
+    max-width: 280px;
+    aspect-ratio: 3 / 4;
+    scroll-snap-align: start;
+    border-radius: 14px;
+    /* Reset last-child override */
+    grid-column: auto;
   }
 
   .exp-section-grid .exp-section-card:last-child {
     grid-column: auto;
     aspect-ratio: 3 / 4;
+    flex: 0 0 72vw;
+    max-width: 280px;
   }
 
   .exp-section-card-label {
-    font-size: 1.1rem;
-    padding: 1.25rem;
+    font-size: 1rem;
+    padding: 1rem 1.1rem 1.25rem;
+  }
+
+  /* Show arrow always on touch (no hover) */
+  .exp-section-card-arrow {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
